@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.util.Scanner;
 
-public class Game {
 
-    String location;
+public class Game {
+    public Location location = null;
+
+    public String locationMine="";
     //private => sınıf içi erişim
     private Scanner input = new Scanner(System.in);
 
@@ -12,12 +14,21 @@ public class Game {
         System.out.print("Lutfen bir isim giriniz : ");
         String playerName = input.nextLine();
         Player player = new Player(playerName);
+
+
+
         System.out.print("Sayin "+player.getName() + " Adaya Hosgeldiniz.");
         System.out.println("Bu karanlik adada yasananlarin hepsi gercek. ");
-        System.out.print("Lutfen bir karakter seciniz. : ");
-        player.selectChar();
+        System.out.println();
 
-        Location location = null;
+
+        System.out.println("KARAKTERLER");
+        player.selectChar();
+        System.out.println();
+
+
+
+
         while (true) {
             player.printInfo();
             System.out.println();
@@ -28,6 +39,7 @@ public class Game {
             System.out.println("3- Magara        --> Odul <yemek> Dikkatli ol zombi cikabilir.");
             System.out.println("4- Orman         --> Odul <odun> Dikkatli ol vampir cikabilir.");
             System.out.println("5- Nehir         --> Odul <su> Dikkatli ol ayi cikabilir.");
+            System.out.println("6- Maden         --> -------");
             System.out.println("0- Cikis yap     --> Oyunu sonlandir.");
             System.out.print("Lutfen gitmek istediginiz bolgeyi seciniz : ");
             int selectLoc = input.nextInt();
@@ -52,6 +64,9 @@ public class Game {
                     break;
                 case 5:
                     location = new River(player);
+                    break;
+                case 6 :
+                    location = new Mine(player);
                     break;
                 default:
                     location = new SafeHouse(player);

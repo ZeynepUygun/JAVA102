@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player {
@@ -7,6 +8,26 @@ public class Player {
     private int money;
     private String name;
     private String charName;
+    private  int originalHealth;
+
+
+
+    public int SnakeFirstDamage() {
+        int minimum = 3;
+        int maximum = 6;
+
+        return new Random().nextInt((maximum - minimum ) + 1) + minimum;
+    }
+
+
+
+    public void setOriginalHealth(int originalHealth) {
+        this.originalHealth = originalHealth;
+    }
+
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
 
     private Scanner input = new Scanner(System.in);
     private Inventory inventory;
@@ -21,7 +42,7 @@ public class Player {
         GameChar[] charList = {new Samurai(), new Archer(), new Knight()};
 
 
-        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------------------------------------");
         //for each kullanıldı.
         for (GameChar gameChar : charList) {
             System.out.println("Id : " + gameChar.getId() + "\tKarakter : " + gameChar.getName() +
@@ -30,8 +51,8 @@ public class Player {
                     "\t Para : " + gameChar.getMoney());
 
         }
-        System.out.println("-------------------------------------");
-        System.out.print("Lutfen bir karakter seciniz.");
+        System.out.println("-------------------------------------------------------------------");
+        System.out.print("\nLutfen bir karakter seciniz.");
         int selectChar = input.nextInt();
         switch (selectChar) {
             case 1:
@@ -46,28 +67,33 @@ public class Player {
             default:
                 initPlayer(new Samurai());
         }
-        System.out.println("Secilen Karakter : " + this.getCharName() +
-                "\t Hasar : " + this.getDamage() +
-                "\t Saglik : " + this.getHealth() +
-                "\t Para : " + this.getMoney());
+
+        System.out.println("\nSecilen Karakter : " + this.getCharName() +
+                "\n Hasar : " + this.getDamage() +
+                "\n Saglik : " + this.getHealth() +
+                "\n Para : " + this.getMoney());
+
 
     }
 
     public void initPlayer(GameChar gameChar) {
         this.setDamage(gameChar.getDamage());
         this.setHealth(gameChar.getHealth());
+        this.setOriginalHealth(gameChar.getHealth());
         this.setMoney(gameChar.getMoney());
         this.setCharName(gameChar.getName());
     }
 
     public void printInfo() {
+
         System.out.println(
-                "Silahiniz : " + this.getInventory().getWeapon().getName() +
-                        " Zirhiniz : " + this.getInventory().getArmor().getName() +
-                        " Bloklama : " + this.getInventory().getArmor().getBlock() +
-                        ", Hasariniz : " + this.getTotalDamage() +
-                        ", Saglik : " + this.getHealth() +
-                        ", Para : " + this.getMoney());
+                "\n\nSilahiniz : " + this.getInventory().getWeapon().getName() +
+                        "\nZirhiniz : " + this.getInventory().getArmor().getName() +
+                        "\nBloklama : " + this.getInventory().getArmor().getBlock() +
+                        "\nHasariniz : " + this.getTotalDamage() +
+                        "\nSaglik : " + this.getHealth() +
+                        "\nPara : " + this.getMoney());
+
 
     }
 
@@ -106,6 +132,9 @@ public class Player {
     }
 
     public void setHealth(int health) {
+        if(health < 0){
+            health = 0;
+        }
         this.health = health;
     }
 
@@ -124,5 +153,6 @@ public class Player {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+
 }
 

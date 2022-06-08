@@ -27,6 +27,7 @@ public class Weapon {
         return null;
     }
 
+
     public int getId(){
         return id;
     }

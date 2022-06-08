@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class ToolStore extends NormalLoc{
     public ToolStore(Player player){
         super(player,"Magaza");
@@ -109,4 +111,5 @@ public class ToolStore extends NormalLoc{
         }
 
     }
+
 }
