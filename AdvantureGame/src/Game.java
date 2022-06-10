@@ -1,19 +1,25 @@
 import javax.swing.*;
+import java.util.Objects;
 import java.util.Scanner;
 
 
 public class Game {
     public Location location = null;
 
-    public String locationMine="";
+
     //private => sınıf içi erişim
     private Scanner input = new Scanner(System.in);
 
+
     public void start(){
+
+        String[] locationName = {"Maden","Magara","Orman","Nehir"};
+
         System.out.println("Macera oyununa hosgelidiniz !");
         System.out.print("Lutfen bir isim giriniz : ");
         String playerName = input.nextLine();
         Player player = new Player(playerName);
+
 
 
 
@@ -30,7 +36,24 @@ public class Game {
 
 
         while (true) {
+
             player.printInfo();
+            System.out.println();
+            player.setCount(0);
+
+            System.out.println("***********  Alinan Oduller ************** \n");
+            for(int i=0;i<4;i++){
+
+                System.out.println(locationName[i] + " <---------> " + player.itemLists(i));
+                if(player.itemLists(i) != null){
+                     player.setCount(player.getCount()+1);
+                     if(player.getCount() == 4){
+                         System.out.println("Oyunu bitirmek icin guvenli eve gidiniz.");
+                     }
+                }
+            }
+
+
             System.out.println();
             System.out.println("*************** Bolgeler ******************");
             System.out.println();
@@ -45,6 +68,7 @@ public class Game {
             int selectLoc = input.nextInt();
             System.out.println();
 
+
             //Polimorfizim : Aynı görevin yada işin farklı yollarla yapılabilmesi
             switch (selectLoc) {
                 case 0:
@@ -57,20 +81,56 @@ public class Game {
                     location = new ToolStore(player);
                     break;
                 case 3:
-                    location = new Cave(player);
-                    break;
+                    if(player.itemLists(1) == null){
+                        location = new Cave(player);
+
+                        break;
+                    }
+                    if(player.itemLists(1) != null){
+                        System.out.println("Bolgeye giremezsiniz! Odulleri basari ile almissiniz.");
+
+                        continue;
+                    }
                 case 4:
-                    location = new Forest(player);
-                    break;
+                    if(player.itemLists(2) == null){
+                        location = new Forest(player);
+
+                        break;
+                    }
+                    if(player.itemLists(2) != null){
+                        System.out.println("Bolgeye giremezsiniz! Odulleri basari ile almissiniz.");
+
+                        continue;
+                    }
                 case 5:
-                    location = new River(player);
-                    break;
+                    if(player.itemLists(3) == null){
+                        location = new River(player);
+
+                        break;
+                    }
+                    if(player.itemLists(3) != null){
+                        System.out.println("Bolgeye giremezsiniz! Odulleri basari ile almissiniz.");
+
+
+                        continue;
+                    }
                 case 6 :
-                    location = new Mine(player);
-                    break;
+
+                    if(player.itemLists(0) == null){
+                        location = new Mine(player);
+                         break;
+                    }
+                    if(player.itemLists(0) != null){
+                        System.out.println("Bolgeye giremezsiniz! Odulleri basari ile almissiniz.");
+
+                        continue;
+                    }
                 default:
                     location = new SafeHouse(player);
+
             }
+
+
             if(location == null){
                 System.out.println("Oyun bitti gorusmek uzere. Yine bekleriz.");
                 break;
@@ -79,7 +139,21 @@ public class Game {
                 System.out.println("GAME OVER !");
                 break;
             }
+            if(location.getName() == "Guvenli Ev"  && player.getCount()==4){
+                System.out.println();
+                System.out.println("------------------------------------------------------------------");
+                System.out.println();
+                System.out.println("Tebrikler Oyunu Basari Ile Tamamladiniz.");
+                System.out.println("Tum Bolgelerde Zafer Sagladiniz.");
+                System.out.println("Yeniden oynamaniz dilegiyle.");
+                System.out.println();
+                System.out.println("------------------------------------------------------------------");
+                System.out.println();
+                break;
+            }
+
 
         }
     }
+
 }

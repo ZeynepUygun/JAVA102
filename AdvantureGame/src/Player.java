@@ -10,11 +10,24 @@ public class Player {
     private String charName;
     private  int originalHealth;
 
+    private String awardItem;
+    private int count;
+
+
+
+    private final String[] itemList = new String[4];
+
+
+
+
+
+
 
 
     public int SnakeFirstDamage() {
         int minimum = 3;
         int maximum = 6;
+
 
         return new Random().nextInt((maximum - minimum ) + 1) + minimum;
     }
@@ -96,6 +109,15 @@ public class Player {
 
 
     }
+    public String itemLists(int id){
+
+        return this.itemList[id];
+    }
+    public String items(int id){
+        this.itemList[id] = getAwardItem();
+        return this.itemList[id];
+
+    }
 
 
     //setter ve getter methodları yazıldı.
@@ -153,6 +175,20 @@ public class Player {
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
+    public String getAwardItem(){
+        return awardItem;
+    }
+    public void setAwardItem(String awardItem){
+        this.awardItem = awardItem;
+    }
+    public int getCount(){
+        return this.count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
 
 }
 

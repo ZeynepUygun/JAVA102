@@ -17,4 +17,5 @@ public class Inventory {
     public void setArmor(Armor armor){
         this.armor = armor;
     }
+
 }

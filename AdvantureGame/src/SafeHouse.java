@@ -6,6 +6,7 @@ public class SafeHouse extends NormalLoc{
     public boolean onLocation(){
         System.out.println("Guvenli evdesiniz.\nCaniniz yenilendi !");
         this.getPlayer().setHealth(this.getPlayer().getOriginalHealth());
+        //if (getPlayer().get)
         return true;
     }
 }

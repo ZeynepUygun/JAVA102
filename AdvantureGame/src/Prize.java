@@ -3,6 +3,7 @@ import java.util.Random;
 public class Prize  extends Location{
     public int money;
     private String award;
+    int obstacleMax;
 
 
     public Prize(Player player) {
@@ -15,7 +16,7 @@ public class Prize  extends Location{
     public String Surprise() {
 
         Random r = new Random(); //random sınıfı
-        int a = r.nextInt(1000);
+        int a = r.nextInt(1001);
 
         /*
         Weapon selectedWeapon = Weapon.getWeaponObjById(3);
@@ -63,16 +64,18 @@ public class Prize  extends Location{
         this.award = "Malesef bos odul kutusu ";
     }
 
+        getPlayer().setAwardItem(award);
+
+        getPlayer().items(0);
+
+
         return award ;
     }
-
-
-
-
     @Override
     boolean onLocation() {
         return false;
     }
+
 }
 
 
