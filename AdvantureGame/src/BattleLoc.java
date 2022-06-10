@@ -52,18 +52,38 @@ public class BattleLoc extends Location{
         return true;
     }
     public boolean combat(int obsNumber){
+      int randomNum = new Random().nextInt(2);
+
         for(int i=0; i<obsNumber;i++){
             this.getObstacle().setHealth(this.getObstacle().getOriginalHealth());
             System.out.println();
             playerStarts();
             obstacleStarts();
-            while (this.getPlayer().getHealth() > 0 && this.getObstacle().getHealth() > 0){
-                System.out.print("<V>ur veya <K>ac   :");
-                String selectCombat = input.nextLine().toUpperCase();
-                if(selectCombat.equals("V")){
-                    System.out.println("Siz vurdunuz.");
-                    this.getObstacle().setHealth(this.obstacle.getHealth() - this.getPlayer().getTotalDamage());
-                    afterHit();
+            //Kimin ilk vuracağını 50% olasılık  ile karar verir.
+            if(randomNum == 0){
+                while (this.getPlayer().getHealth() > 0 && this.getObstacle().getHealth() > 0){
+                    System.out.print("<V>ur veya <K>ac   :");
+                    String selectCombat = input.nextLine().toUpperCase();
+                    if(selectCombat.equals("V")){
+                        System.out.println("Siz vurdunuz.");
+                        this.getObstacle().setHealth(this.obstacle.getHealth() - this.getPlayer().getTotalDamage());
+                        afterHit();
+                        if(this.getObstacle().getHealth() > 0){
+                            System.out.println();
+                            System.out.println("Canavar size vurdu !");
+                            int obstacleDamage = this.getObstacle().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
+                            if(obstacleDamage < 0){
+                                obstacleDamage =0;
+                            }
+                            this.getPlayer().setHealth(this.getPlayer().getHealth()-obstacleDamage);
+                            afterHit();
+                        }
+                    }else {
+                        return false;
+                    }
+                }
+            }else{
+                while (this.getPlayer().getHealth() > 0 && this.getObstacle().getHealth() > 0){
                     if(this.getObstacle().getHealth() > 0){
                         System.out.println();
                         System.out.println("Canavar size vurdu !");
@@ -74,19 +94,25 @@ public class BattleLoc extends Location{
                         this.getPlayer().setHealth(this.getPlayer().getHealth()-obstacleDamage);
                         afterHit();
                     }
-                }else {
-                    return false;
+                    System.out.print("<V>ur veya <K>ac   :");
+                    String selectCombat = input.nextLine().toUpperCase();
+                    if(selectCombat.equals("V")){
+                        System.out.println("Siz vurdunuz.");
+                        this.getObstacle().setHealth(this.obstacle.getHealth() - this.getPlayer().getTotalDamage());
+                        afterHit();
+
+                    }else {
+                        return false;
+                    }
                 }
             }
-            if(this.getObstacle().getHealth() < this.getPlayer().getHealth()){
+            /*if(this.getObstacle().getHealth() < this.getPlayer().getHealth()){
                 System.out.println("Dusmani yendiniz !");
                 System.out.println(this.getObstacle().getAward() + " para kazandiniz.");
                 this.getPlayer().setMoney(this.getPlayer().getMoney() + this.getObstacle().getAward());
                 System.out.println("Guncel Paraniz : " + this.getPlayer().getMoney());
-            }
-        }
-
-        if(this.getObstacle().getHealth() < this.getPlayer().getHealth()){
+            }*/
+        }if(this.getObstacle().getHealth() <= 0){
             System.out.println("Bolgedeki dusmanlar yenildi !");
             if( getObstacle().getName().equals("Zombi")){
                 getPlayer().setAwardItem(award);
@@ -108,6 +134,7 @@ public class BattleLoc extends Location{
                     Weapon selectedWeapon = Weapon.getWeaponObjById(3);
                     this.getPlayer().getInventory().setWeapon(selectedWeapon);
                     System.out.println(this.getAward() + " Silahini Kazandiniz.");
+
 
                 }
                 if(this.getAward().equals("Kilic")){
@@ -157,6 +184,10 @@ public class BattleLoc extends Location{
 
                     System.out.println(this.getAward() + " Para Kazandiniz.");
                 }
+                getPlayer().setAwardItem(award);
+
+                getPlayer().items(0);
+
 
             }
             else {
@@ -171,6 +202,8 @@ public class BattleLoc extends Location{
             }
 
         }
+
+
 
         return false;
     }

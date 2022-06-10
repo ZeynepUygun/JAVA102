@@ -64,9 +64,6 @@ public class Prize  extends Location{
         this.award = "Malesef bos odul kutusu ";
     }
 
-        getPlayer().setAwardItem(award);
-
-        getPlayer().items(0);
 
 
         return award ;
