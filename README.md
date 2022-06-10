@@ -2,9 +2,9 @@
 1-ADVENTURE GAME 
 ## ADVENTURE GAME 
 ![My image](https://github.com/ZU1234/JAVA102/blob/main/AdvantureGame/Oyun%C3%96zellikleri.png?raw=true "Optional Title")
-## Kural 1 
+### Kural 1 
 Oyunu bitirebilmek için savaş bölgelerindeki tüm düşmanlar temizlendikten sonra bölgeye özel ödülü oyunucun envanterine eklenmelidir. Eğer oyuncu tüm ödülleri toplayıp "Güvenli Eve" dönebilirse oyunu kazanır. Ayrıca ödül kazanılan bölgeye tekrar giriş yapılamaz.
-## Bölge Ödülleri :
+### Bölge Ödülleri :
 
 Mağara => Yemek (Food)
 Orman => Odun (Firewood)
@@ -15,7 +15,7 @@ Oyuncu bir canavarla karşılaştığında ilk hamleyi kimin yapacağını, %50 
 ### Kural 3 
 Yeni bir savaş bölgesi eklenmeli. Bu bölgenin amacı yenilen rakiplerden rastgele para, silah veya zırh kazanma ihtimali olması.
 
-## Bölge Adı : Maden
+### Bölge Adı : Maden
 
 Canavar : Yılan (1-5 Adet)
 Özellik : Savaş ve Ganimet
