@@ -1,0 +1,20 @@
+Kitap Sýralayýcý
+
+Book isminde bir sýnýf tasarlayýnýz. Bu sýnýf Comparable interface'den kalýtým alýp "compareTo" 
+metodunu override ediniz. Bu metodun içinde kitabý A'dan Z'ye isme göre sýralayan kodu yazýnýz. 
+Bu sýnýftan 5 tane nesne oluþturun ve nesneleri Set tipinde bir yapýsýnda saklayýnýz. Sonra ikinci 
+kez Set tipinden bir veri yapýsý kullanýn ve kitaplarý sayfa sayýsýna göre sýralamasýný saðlayýnýz.
+
+Book sýnýfý kitap ismi, sayfa sayýsý, yazarýn ismi, yayýn tarihi deðiþkenlerinden oluþmaktadýr.
+
+
+The Book Sorter
+
+Design a class called Book. This class is inherited from the Comparable interface and override 
+the "compareTo" method. In this method, write the code that sorts the book by name from A to Z. 
+Create 5 objects of this class and store them in a Set-type structure. Then, for the second time, 
+use a data structure of the Set type and sort the books by the number of pages.
+
+
+
+The Book class consists of the variables book name, number of pages, author's name, publication date.
