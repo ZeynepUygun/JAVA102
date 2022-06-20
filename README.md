@@ -1,5 +1,9 @@
 # ( JAVA102 Homework )
 1-ADVENTURE GAME 
+
+2-My Own List Class
+
+3-The-Book-Sorter
 ## ADVENTURE GAME 
 ![My image](https://github.com/ZU1234/JAVA102/blob/main/AdvantureGame/Oyun%C3%96zellikleri.png?raw=true "Optional Title")
 
@@ -132,3 +136,9 @@ Sınıfın amacı içerisinde dinamik bir Array (Dizi) tutması ve veri tipini d
 
 
 ***boolean contains(T data) :*** Parametrede verilen değerin dizide olup olmadığını söyler.
+  
+## The-Book-Sorter
+  
+  Book isminde bir sınıf tasarlayınız. Bu sınıf Comparable interface'den kalıtım alıp "compareTo" metodunu override ediniz. Bu metodun içinde kitabı A'dan Z'ye isme göre sıralayan kodu yazınız. Bu sınıftan 5 tane nesne oluşturun ve nesneleri Set tipinde bir yapısında saklayınız. Sonra ikinci kez Set tipinden bir veri yapısı kullanın ve kitapları sayfa sayısına göre sıralamasını sağlayınız.
+
+Book sınıfı kitap ismi, sayfa sayısı, yazarın ismi, yayın tarihi değişkenlerinden oluşmaktadır.
