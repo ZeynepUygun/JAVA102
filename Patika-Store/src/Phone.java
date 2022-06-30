@@ -3,7 +3,7 @@ import java.util.*;
 public class Phone extends DataBase {
 
 
-    private static  TreeMap<Phone, Integer> phoneList2 = new TreeMap<>((o1, o2) -> {
+    private static final TreeMap<Phone, Integer> phoneList2 = new TreeMap<>((o1, o2) -> {
 
         String name1 = o1.getBrand() + "a";
         String name2 = o2.getBrand() + "b";
@@ -13,14 +13,12 @@ public class Phone extends DataBase {
     });
 
 
-
-
-
-    private     String storage;//Depolama
-   private    String batteryPower;//Pil Gücü
-    private     String color;//renk
+    private final String storage;//Depolama
+    private final String batteryPower;//Pil Gücü
+    private final String color;//renk
 
     public int id;
+
     public Phone(int id, int unitPrice, int discountRate, int amount, String productName, String brand,
                  String screenSize, String ram, String storage, String batteryPower, String color) {
         super(unitPrice, discountRate, amount, productName, brand,
@@ -30,8 +28,6 @@ public class Phone extends DataBase {
         this.batteryPower = batteryPower;
         this.color = color;
         this.id = id;
-
-
 
 
     }
@@ -206,22 +202,13 @@ public class Phone extends DataBase {
     }
 
 
-    public static TreeMap<Phone, Integer> getPhoneList2() {
-        return phoneList2;
-    }
-
-    public static void setPhoneList2(TreeMap<Phone, Integer> phoneList2) {
-        Phone.phoneList2 = phoneList2;
-    }
-
     public static void phonesAdd(int i, int unitPrice, int discountRate, int amount, String productName, String brand,
                                  String screenSize, String ram, String storage, String batteryPower, String color) {
 
-        phoneList.add(new Phone(i, unitPrice,discountRate,amount,
+        phoneList.add(new Phone(i, unitPrice, discountRate, amount,
                 productName, brand, screenSize, ram, storage,
                 batteryPower, color));
     }
-
 
 
     public String getStorage() {
