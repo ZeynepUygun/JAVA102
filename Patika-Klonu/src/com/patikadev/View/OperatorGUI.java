@@ -309,7 +309,7 @@ public class OperatorGUI extends JFrame {
                 if(Course.add(userItem.getKey(),patikaItem.getKey(),fld_course_name.getText(),fld_course_lang.getText())){
                     Helper.showMsg("done");
                     loadCourseModel();
-                    createTableLesson(fld_course_name.getText());
+
                     fld_course_lang.setText(null);
                     fld_course_name.setText(null);
                 }else {
@@ -416,19 +416,5 @@ public class OperatorGUI extends JFrame {
         }
 
     }
-    public void createTableLesson(String lesson){
-        //Create table
-        String query ="CREATE table public.\""+lesson+"\"( id SERIAL, contents varchar(255),quiz_id integer)";
-        try {
-            PreparedStatement pr = DbConnecter.getInstance().prepareStatement(query);
 
-            pr.executeQuery();
-
-
-
-        } catch (SQLException ignored) {
-
-
-        }
-    }
 }

@@ -226,7 +226,7 @@ public class User {
         return userList;
     }
     public static String searchQuery(String name,String uname,String type){
-        String query ="SELECT * FROM users WHERE uname LIKE '%{{uname}}%' AND name LIKE '%{{name}}%'";
+        String query ="SELECT * FROM users WHERE uname ILIKE '%{{uname}}%' AND name ILIKE '%{{name}}%'";
         query=query.replace("{{uname}}",uname);
         query=query.replace("{{name}}",name);
         if(!type.isEmpty()){

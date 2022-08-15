@@ -5,8 +5,7 @@ import com.patikadev.Helper.Helper;
 import com.patikadev.Model.Patika;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class UpdatePatikaGUI extends JFrame {
     private JPanel wrapper;

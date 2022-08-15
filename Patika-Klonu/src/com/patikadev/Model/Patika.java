@@ -16,6 +16,10 @@ public class Patika {
         this.name = name;
     }
 
+    public Patika() {
+
+    }
+
     public static ArrayList<Patika> getList() {
         ArrayList<Patika> patikaList = new ArrayList<>();
         Patika obj;

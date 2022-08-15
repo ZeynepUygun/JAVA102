@@ -2,6 +2,7 @@ package com.patikadev.View;
 
 import com.patikadev.Helper.Config;
 import com.patikadev.Helper.Helper;
+import com.patikadev.Model.Educator;
 import com.patikadev.Model.Operator;
 import com.patikadev.Model.User;
 
@@ -51,6 +52,9 @@ public class LoginGUI extends JFrame {
 
                                 edUI.getLbl_educator_name().setText("HoşGeldiniz "+u.getName());
                                 edUI.setUser_id(u.getId());
+
+                                Educator ed =new Educator();
+                                ed.setUser_id(u.getId());
                                 System.out.println(u.getId());
 
 

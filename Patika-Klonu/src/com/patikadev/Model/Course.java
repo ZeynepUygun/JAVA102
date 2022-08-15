@@ -30,6 +30,10 @@ public class Course {
         this.educator =User.getFetch(user_id);
     }
 
+    public Course() {
+
+    }
+
     public static ArrayList<Course> getList() {
         ArrayList<Course> courseList = new ArrayList<>();
         Course obj;
@@ -95,6 +99,31 @@ public class Course {
         return courseList;
 
     }
+    public static ArrayList<Course> getListByPatika(int user_id) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        Course obj;
+
+        try {
+            Statement st = DbConnecter.getInstance().createStatement();
+            ResultSet rs =st.executeQuery("SELECT * FROM course WHERE user_id = "+user_id);
+            while (rs.next()){
+                int id = rs.getInt("id");
+                int user_ID = rs.getInt("user_id");
+                int patika_Id = rs.getInt("patika_id");
+                String name = rs.getString("name");
+                String lang = rs.getString("lang");
+
+                obj = new Course(id,user_ID,patika_Id,name,lang);
+                courseList.add(obj);
+
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return courseList;
+
+    }
     public static boolean delete(int id) {
         String query = "DELETE FROM course WHERE id = ?";
         try {
@@ -106,6 +135,31 @@ public class Course {
             throwables.printStackTrace();
         }
         return true;
+    }
+    public static Course getFetch(int id) {
+
+        Course obj = null;
+        String query = "SELECT * FROM course WHERE id = ?";
+
+        try {
+            PreparedStatement pr = DbConnecter.getInstance().prepareStatement(query);
+            pr.setInt(1,id);
+            ResultSet rs = pr.executeQuery();
+            if(rs.next()) {
+                obj = new Course(rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getInt("patika_id"),
+                        rs.getString("name"),
+                        rs.getString("lang"));
+
+
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return obj;
+
     }
 
     public int getId() {
