@@ -29,6 +29,8 @@ public class UpdatePatikaGUI extends JFrame {
             } else {
                 if (Patika.update(patika.getId(), fld_patika_name.getText())) {
                     Helper.showMsg("done");
+                }else {
+                    Helper.showMsg("error");
                 }
                 dispose();
             }

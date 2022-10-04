@@ -3,10 +3,7 @@ package com.patikadev.Model;
 import com.patikadev.Helper.DbConnecter;
 import com.patikadev.Helper.Helper;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class User {
@@ -44,6 +41,8 @@ public class User {
                 obj.setType(rs.getString("type"));
                 userList.add(obj);
             }
+            rs.close();
+            st.getConnection().close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -66,6 +65,8 @@ public class User {
             pr.setString(3, pass);
             pr.setString(4, type);
             int response = pr.executeUpdate();
+
+            pr.getConnection().close();
             if (response == -1) {
                 Helper.showMsg("error");
             }
@@ -97,12 +98,15 @@ public class User {
 
 
             }
+            rs.close();
+            pr.getConnection().close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return obj;
     }
-    public static User getFetch(String uname,String pass) {
+
+    public static User getFetch(String uname, String pass) {
         User obj = null;
         String query = "SELECT * FROM users WHERE uname = ? AND pass = ?";
 
@@ -112,13 +116,13 @@ public class User {
             pr.setString(2, pass);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
-              switch (rs.getString("type")){
-                  case"operator":
-                      obj =new Operator();
-                      break;
-                  default:
-                      obj = new User();
-              }
+                switch (rs.getString("type")) {
+                    case "operator":
+                        obj = new Operator();
+                        break;
+                    default:
+                        obj = new User();
+                }
 
                 obj.setId(rs.getInt("id"));
                 obj.setName(rs.getString("name"));
@@ -128,17 +132,22 @@ public class User {
 
 
             }
+            rs.close();
+            pr.getConnection().close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return obj;
     }
+
     public static User getFetch(int id) {
+
         User obj = null;
         String query = "SELECT * FROM users WHERE id = ?";
 
         try {
             PreparedStatement pr = DbConnecter.getInstance().prepareStatement(query);
+
             pr.setInt(1, id);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
@@ -151,6 +160,10 @@ public class User {
 
 
             }
+            rs.close();
+            pr.getConnection().close();
+
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -160,14 +173,16 @@ public class User {
 
     public static boolean delete(int id) {
         String query = "DELETE FROM users WHERE id = ?";
-        ArrayList<Course> courseList=Course.getListByUser(id);
-        for(Course c : courseList){
+        ArrayList<Course> courseList = Course.getListByUser(id);
+        for (Course c : courseList) {
             Course.delete(c.getId());
         }
         try {
             PreparedStatement pr = DbConnecter.getInstance().prepareStatement(query);
             pr.setInt(1, id);
 
+
+            pr.getConnection().close();
 
             return pr.executeUpdate() != -1;
         } catch (SQLException throwables) {
@@ -192,7 +207,9 @@ public class User {
             pr.setString(2, uname);
             pr.setString(3, pass);
             pr.setString(4, type);
-            pr.setInt(5,id);
+            pr.setInt(5, id);
+
+            pr.getConnection().close();
             return pr.executeUpdate() != -1;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -218,25 +235,29 @@ public class User {
                 obj.setType(rs.getString("type"));
                 userList.add(obj);
             }
+            rs.close();
+            st.getConnection().close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            System.out.println(throwables.getMessage());
+
         }
         return userList;
     }
-    public static String searchQuery(String name,String uname,String type){
-        String query ="SELECT * FROM users WHERE uname ILIKE '%{{uname}}%' AND name ILIKE '%{{name}}%'";
-        query=query.replace("{{uname}}",uname);
-        query=query.replace("{{name}}",name);
-        if(!type.isEmpty()){
-            query +="AND type = '{{type}}'";
-            query = query.replace("{{type}}",type);
+
+    public static String searchQuery(String name, String uname, String type) {
+        String query = "SELECT * FROM users WHERE uname ILIKE '%{{uname}}%' AND name ILIKE '%{{name}}%'";
+        query = query.replace("{{uname}}", uname);
+        query = query.replace("{{name}}", name);
+        if (!type.isEmpty()) {
+            query += "AND type = '{{type}}'";
+            query = query.replace("{{type}}", type);
         }
 
 
         return query;
     }
+
     public static ArrayList<User> getListOnlyEducator() {
         ArrayList<User> userList = new ArrayList<>();
         String query = "SELECT * FROM users WHERE type = 'education'";
@@ -253,6 +274,8 @@ public class User {
                 obj.setType(rs.getString("type"));
                 userList.add(obj);
             }
+            rs.close();
+            st.getConnection().close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

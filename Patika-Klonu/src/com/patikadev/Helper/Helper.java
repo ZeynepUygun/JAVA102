@@ -2,7 +2,7 @@ package com.patikadev.Helper;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.function.IntUnaryOperator;
+
 
 public class Helper {
     public static void setLayout() {
@@ -55,6 +55,11 @@ public class Helper {
             case "error":
                 msg ="Bir Hata Oluştu !";
                 title= "Hata";
+                break;
+            case "Secim":
+                msg="Listeden seçim yapılmalıdır.";
+                title="Hata";
+                break;
             default:
                 msg=str;
                 title="Mesaj";

@@ -2,7 +2,6 @@ package com.patikadev.View;
 
 import com.patikadev.Helper.Config;
 import com.patikadev.Helper.Helper;
-import com.patikadev.Model.Educator;
 import com.patikadev.Model.Operator;
 import com.patikadev.Model.User;
 
@@ -17,6 +16,7 @@ public class LoginGUI extends JFrame {
     private JTextField fld_user_uname;
     private JPasswordField fld_user_pass;
     private JButton btn_login;
+    private JButton btn_signUP;
 
 
     public LoginGUI() {
@@ -48,19 +48,17 @@ public class LoginGUI extends JFrame {
 
                                 break;
                             case "Education":
-                                EducatorGUI edUI = new EducatorGUI();
+                                EducatorGUI edUI = new EducatorGUI(u.getId());
 
-                                edUI.getLbl_educator_name().setText("HoşGeldiniz "+u.getName());
-                                edUI.setUser_id(u.getId());
-
-                                Educator ed =new Educator();
-                                ed.setUser_id(u.getId());
-                                System.out.println(u.getId());
+                                edUI.getLbl_educator_name().setText("HoşGeldiniz " + u.getName());
 
 
                                 break;
                             case "student":
-                                StudentGUI stGUI = new StudentGUI();
+                                StudentGUI stGUI = new StudentGUI(u.getId());
+
+
+                                stGUI.setUser_id(u.getId());
 
                                 break;
 
@@ -69,6 +67,13 @@ public class LoginGUI extends JFrame {
                         dispose();
                     }
                 }
+            }
+        });
+        btn_signUP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SignUPGUI sign = new SignUPGUI();
             }
         });
     }

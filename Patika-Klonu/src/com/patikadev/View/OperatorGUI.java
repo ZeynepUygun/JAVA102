@@ -14,10 +14,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -343,7 +339,7 @@ public class OperatorGUI extends JFrame {
             row_course_list[i++] =lst.getName();
             row_course_list[i++] = lst.getLang();
             row_course_list[i++] = lst.getPatika().getName();
-            row_course_list[i++] = lst.getEducator().getName();
+            row_course_list[i++] = lst.getUser().getName();
             mdl_course_list.addRow(row_course_list);
 
 
