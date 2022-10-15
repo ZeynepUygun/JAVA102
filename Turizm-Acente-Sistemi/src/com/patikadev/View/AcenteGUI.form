@@ -63,44 +63,110 @@
                 <border type="none"/>
                 <children>
                   <grid id="8f139" binding="tbpnl_hotel_table" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="10" left="10" bottom="10" right="10"/>
                     <constraints>
                       <tabbedpane title="OTEL"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="c2ba7" class="javax.swing.JTable" binding="tbl_otel_list">
+                      <scrollpane id="cc601" binding="scrl_hotel_list">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
-                      </component>
-                      <vspacer id="f4cfe">
+                        <border type="none"/>
+                        <children>
+                          <grid id="8b78c" binding="pnl_hotel_list" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                            <margin top="0" left="0" bottom="0" right="0"/>
+                            <constraints/>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <scrollpane id="9a300">
+                                <constraints>
+                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                                </constraints>
+                                <properties/>
+                                <border type="none"/>
+                                <children>
+                                  <component id="d000e" class="javax.swing.JTable" binding="tbl_hotel_list">
+                                    <constraints/>
+                                    <properties>
+                                      <autoCreateRowSorter value="false"/>
+                                    </properties>
+                                  </component>
+                                </children>
+                              </scrollpane>
+                            </children>
+                          </grid>
+                        </children>
+                      </scrollpane>
+                      <grid id="920cf" binding="pnl_hotel_search" layout-manager="GridLayoutManager" row-count="1" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
                         <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
-                      </vspacer>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="b72a1" class="javax.swing.JLabel" binding="lbl_sh_hotelName">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Otel Adı :"/>
+                            </properties>
+                          </component>
+                          <hspacer id="f6b1">
+                            <constraints>
+                              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                          </hspacer>
+                          <component id="86c89" class="javax.swing.JTextField" binding="fld_sh_hotelName">
+                            <constraints>
+                              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="55f72" class="javax.swing.JButton" binding="btn_sh_hotel">
+                            <constraints>
+                              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="ARA"/>
+                            </properties>
+                          </component>
+                          <component id="43034" class="javax.swing.JLabel" binding="lbl_sh_hotelCity">
+                            <constraints>
+                              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Şehir"/>
+                            </properties>
+                          </component>
+                          <component id="eba29" class="javax.swing.JTextField" binding="fld_sh_hotelCity">
+                            <constraints>
+                              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                        </children>
+                      </grid>
                     </children>
                   </grid>
                   <grid id="12cc3" binding="tbpnl_room_table" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <margin top="10" left="10" bottom="10" right="10"/>
                     <constraints>
                       <tabbedpane title="ODA"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="6cdc" class="javax.swing.JTable" binding="tbl_room_list">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties/>
-                      </component>
                       <vspacer id="2e122">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
@@ -136,7 +202,11 @@
                             <constraints>
                               <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <model>
+                                <item value=""/>
+                              </model>
+                            </properties>
                           </component>
                           <component id="f64eb" class="javax.swing.JLabel" binding="lbl_edit_hostel_type">
                             <constraints>
@@ -150,7 +220,11 @@
                             <constraints>
                               <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
-                            <properties/>
+                            <properties>
+                              <model>
+                                <item value=""/>
+                              </model>
+                            </properties>
                           </component>
                           <component id="a9efa" class="javax.swing.JLabel" binding="lbl_edit_roomPiece">
                             <constraints>
@@ -257,6 +331,19 @@
                           </component>
                         </children>
                       </grid>
+                      <scrollpane id="9dd5a">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="6cdc" class="javax.swing.JTable" binding="tbl_room_list">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
                     </children>
                   </grid>
                   <grid id="f8460" binding="tbpnl_add" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -484,7 +571,7 @@
                             <border type="none"/>
                             <children>
                               <grid id="aec89" binding="pnl_room_add" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                                <margin top="0" left="0" bottom="0" right="0"/>
+                                <margin top="10" left="10" bottom="10" right="10"/>
                                 <constraints/>
                                 <properties/>
                                 <border type="none"/>
@@ -511,7 +598,11 @@
                                     <constraints>
                                       <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
-                                    <properties/>
+                                    <properties>
+                                      <model>
+                                        <item value=""/>
+                                      </model>
+                                    </properties>
                                   </component>
                                   <component id="d3bf9" class="javax.swing.JLabel" binding="lbl_hostel">
                                     <constraints>
@@ -525,7 +616,11 @@
                                     <constraints>
                                       <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
-                                    <properties/>
+                                    <properties>
+                                      <model>
+                                        <item value=""/>
+                                      </model>
+                                    </properties>
                                   </component>
                                   <component id="3c293" class="javax.swing.JLabel" binding="lbl_room_piece">
                                     <constraints>
