@@ -64,6 +64,30 @@ public class Facility implements Query {
 
     }
     //**************************************************
+    //özelliğin id'sini getirir.
+    public static Facility getFetch(String facility) {
+        Facility obj = null;
+
+
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(facilityWhereFeature);
+            pr.setString(1, facility);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                obj = new Facility(rs.getInt("id"),
+                        rs.getString("feature"));
+
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+
+    }
+    //**************************************************
     public int getId() {
         return id;
     }

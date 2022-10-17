@@ -370,7 +370,7 @@
                             <properties/>
                             <border type="none"/>
                             <children>
-                              <grid id="5144f" binding="pnl_hotel_Add" layout-manager="GridLayoutManager" row-count="18" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                              <grid id="5144f" binding="pnl_hotel_Add" layout-manager="GridLayoutManager" row-count="19" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                                 <margin top="10" left="10" bottom="10" right="10"/>
                                 <constraints/>
                                 <properties/>
@@ -378,7 +378,7 @@
                                 <children>
                                   <component id="c79d9" class="javax.swing.JLabel" binding="lbl_hotel_name">
                                     <constraints>
-                                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Otel Adı "/>
@@ -386,17 +386,17 @@
                                   </component>
                                   <hspacer id="480fe">
                                     <constraints>
-                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                   </hspacer>
                                   <vspacer id="b2d4f">
                                     <constraints>
-                                      <grid row="17" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                                      <grid row="18" column="0" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                   </vspacer>
                                   <component id="c7886" class="javax.swing.JLabel" binding="lbl_hotel_country">
                                     <constraints>
-                                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Bulunduğu bölge"/>
@@ -404,7 +404,7 @@
                                   </component>
                                   <component id="2c384" class="javax.swing.JTextField" binding="fld_hotel_name">
                                     <constraints>
-                                      <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -412,7 +412,7 @@
                                   </component>
                                   <component id="15452" class="javax.swing.JTextField" binding="fld_hotel_country">
                                     <constraints>
-                                      <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -420,7 +420,7 @@
                                   </component>
                                   <component id="ec91" class="javax.swing.JLabel" binding="lbl_hotel_city">
                                     <constraints>
-                                      <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Bulunduğu Şehir"/>
@@ -428,7 +428,7 @@
                                   </component>
                                   <component id="595e7" class="javax.swing.JTextField" binding="fld_hotel_city">
                                     <constraints>
-                                      <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="5" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -436,7 +436,7 @@
                                   </component>
                                   <component id="744b0" class="javax.swing.JLabel" binding="lbl_hotel_address">
                                     <constraints>
-                                      <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Adres"/>
@@ -444,7 +444,7 @@
                                   </component>
                                   <component id="4aea3" class="javax.swing.JTextField" binding="fld_hotel_address">
                                     <constraints>
-                                      <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="7" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -452,7 +452,7 @@
                                   </component>
                                   <component id="74d3d" class="javax.swing.JLabel" binding="lbl_hotel_email">
                                     <constraints>
-                                      <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="8" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="E-mail"/>
@@ -460,7 +460,7 @@
                                   </component>
                                   <component id="6afdb" class="javax.swing.JTextField" binding="fld_hotel_email">
                                     <constraints>
-                                      <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="9" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -468,7 +468,7 @@
                                   </component>
                                   <component id="52519" class="javax.swing.JLabel" binding="lbl_hotel_phone">
                                     <constraints>
-                                      <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="10" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Telefon"/>
@@ -476,7 +476,7 @@
                                   </component>
                                   <component id="2e916" class="javax.swing.JTextField" binding="fld_hotel_phone">
                                     <constraints>
-                                      <grid row="11" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                      <grid row="11" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                         <preferred-size width="100" height="-1"/>
                                       </grid>
                                     </constraints>
@@ -484,7 +484,7 @@
                                   </component>
                                   <component id="571f0" class="javax.swing.JCheckBox" binding="chck_carPark">
                                     <constraints>
-                                      <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Ücretsiz Otopark"/>
@@ -492,7 +492,7 @@
                                   </component>
                                   <component id="2ac2e" class="javax.swing.JLabel" binding="lbl_hotel_facility">
                                     <constraints>
-                                      <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="13" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Tesis Özelliklerini seçiniz."/>
@@ -500,7 +500,7 @@
                                   </component>
                                   <component id="7a811" class="javax.swing.JCheckBox" binding="chck_fitness">
                                     <constraints>
-                                      <grid row="16" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="17" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Fitness Center"/>
@@ -508,7 +508,7 @@
                                   </component>
                                   <component id="84e19" class="javax.swing.JCheckBox" binding="chck_wifi">
                                     <constraints>
-                                      <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="15" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Ücretsiz Wifi"/>
@@ -516,7 +516,7 @@
                                   </component>
                                   <component id="91bd8" class="javax.swing.JCheckBox" binding="chck_natatorium">
                                     <constraints>
-                                      <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="16" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Yüzme Havuzu"/>
@@ -524,20 +524,20 @@
                                   </component>
                                   <hspacer id="a0f73">
                                     <constraints>
-                                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                   </hspacer>
                                   <component id="6d938" class="javax.swing.JCheckBox" binding="chck_concierge">
                                     <constraints>
-                                      <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="14" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
-                                      <text value="HotelConcierge"/>
+                                      <text value="Hotel Concierge"/>
                                     </properties>
                                   </component>
                                   <component id="e469" class="javax.swing.JCheckBox" binding="chck_spa">
                                     <constraints>
-                                      <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="15" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="SPA"/>
@@ -545,7 +545,7 @@
                                   </component>
                                   <component id="4fa22" class="javax.swing.JCheckBox" binding="chck_roomService">
                                     <constraints>
-                                      <grid row="15" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="16" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="7/24 Oda Servisi"/>
@@ -553,10 +553,33 @@
                                   </component>
                                   <component id="8ae3f" class="javax.swing.JButton" binding="btn_hotel_add">
                                     <constraints>
-                                      <grid row="17" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                                      <grid row="18" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                                     </constraints>
                                     <properties>
                                       <text value="Ekle"/>
+                                    </properties>
+                                  </component>
+                                  <component id="5ca1a" class="javax.swing.JLabel" binding="lbl_hotel_star">
+                                    <constraints>
+                                      <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <text value="Yıldız :"/>
+                                    </properties>
+                                  </component>
+                                  <component id="4fd09" class="javax.swing.JComboBox" binding="cmb_hotel_star">
+                                    <constraints>
+                                      <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                                    </constraints>
+                                    <properties>
+                                      <model>
+                                        <item value=" "/>
+                                        <item value="1"/>
+                                        <item value="2"/>
+                                        <item value="3"/>
+                                        <item value="4"/>
+                                        <item value="5"/>
+                                      </model>
                                     </properties>
                                   </component>
                                 </children>

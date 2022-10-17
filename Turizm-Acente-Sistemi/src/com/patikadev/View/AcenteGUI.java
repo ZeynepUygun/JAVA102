@@ -2,6 +2,7 @@ package com.patikadev.View;
 
 import com.patikadev.Helper.Config;
 import com.patikadev.Helper.Helper;
+import com.patikadev.Model.Facility;
 import com.patikadev.Model.Hostel;
 import com.patikadev.Model.Hotel;
 import com.patikadev.Model.Room;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AcenteGUI extends JFrame {
+    protected String facilityAll;
     private JPanel wrapper;
     private JPanel pnl_acente;
     private JScrollPane scrl_acente;
@@ -22,7 +24,6 @@ public class AcenteGUI extends JFrame {
     private JPanel tbpnl_room_table;
     private JPanel tbpnl_add;
     private JTabbedPane tabbedPane2;
-
     private JTable tbl_room_list;
     private JScrollPane scrl_hotel_Add;
     private JPanel pnl_hotel_Add;
@@ -88,11 +89,13 @@ public class AcenteGUI extends JFrame {
     private JButton btn_sh_hotel;
     private JTextField fld_sh_hotelCity;
     private JLabel lbl_sh_hotelCity;
-
+    private JComboBox cmb_hotel_star;
+    private JLabel lbl_hotel_star;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private DefaultTableModel mdl_room_list;
     private Object[] row_room_list;
+
 
     public AcenteGUI() {
         add(wrapper);
@@ -161,9 +164,57 @@ public class AcenteGUI extends JFrame {
         btn_hotel_add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                chckbox();
+
+                if (Helper.isFieldEmpty(fld_hotel_name) ||
+                        Helper.isFieldEmpty(fld_hotel_country) ||
+                        Helper.isFieldEmpty(fld_hotel_city) ||
+                        Helper.isFieldEmpty(fld_hotel_address) ||
+                        Helper.isFieldEmpty(fld_hotel_email) ||
+                        Helper.isFieldEmpty(fld_hotel_phone) ||
+                        facilityAll.isEmpty() ||
+                        cmb_hotel_star.getSelectedItem()=="")
+                {
+
+                    Helper.showMsg("empty");
+
+                }else {
+                    System.out.println("girdi");
+                    String name=fld_hotel_name.getText().trim().toUpperCase();
+                    String country=fld_hotel_country.getText().trim().toUpperCase();
+                    String city =fld_hotel_city.getText().trim().toUpperCase();
+                    String address="";
+                    String[] addressEdit=fld_hotel_address.getText().trim().split(" ");
+                    for(int i=0;i<addressEdit.length;i++){
+
+                        addressEdit[i]=addressEdit[i].substring(0,1).toUpperCase()+addressEdit[i].substring(1).toLowerCase()+" ";
+                        address=address.concat(addressEdit[i]);
+                    }
+                    System.out.println(address+"  "+addressEdit.toString());
+
+                    String e_mail=fld_hotel_email.getText().trim();
+                    String phone=fld_hotel_phone.getText().trim();
+
+                    int star= Integer.parseInt(cmb_hotel_star.getSelectedItem().toString());
+                    if(Helper.confirm("sure")){
+                        if(Hotel.add(name,country,city,address,e_mail,phone,facilityAll,star)){
+                            Helper.showMsg("done");
+                            loadHotelModel();
+
+                        }
+                    }else {
+                        Helper.showMsg("Ekleme işlemi iptal edildi.");
+                    }
+
+                }
+
 
             }
+
         });
+        //************************************************
+
+
     }
 
     public static void main(String[] args) {
@@ -207,6 +258,42 @@ public class AcenteGUI extends JFrame {
             mdl_room_list.addRow(row_room_list);
         }
     }
+
+    //Checkbox işlemleri.
+    public void chckbox() {
+        facilityAll = "";
+        if (chck_carPark.isSelected()) {
+            int id = Facility.getFetch(chck_carPark.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_wifi.isSelected()) {
+            int id = Facility.getFetch(chck_wifi.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_natatorium.isSelected()) {
+            int id = Facility.getFetch(chck_natatorium.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_fitness.isSelected()) {
+            int id = Facility.getFetch(chck_fitness.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_concierge.isSelected()) {
+            int id = Facility.getFetch(chck_concierge.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_spa.isSelected()) {
+            int id = Facility.getFetch(chck_spa.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        if (chck_roomService.isSelected()) {
+            int id = Facility.getFetch(chck_roomService.getText()).getId();
+            facilityAll = facilityAll + Integer.valueOf(id);
+        }
+        facilityAll = facilityAll.trim();
+
+    }
+    //************************************************
 
 
 }

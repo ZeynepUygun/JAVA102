@@ -1,6 +1,7 @@
 package com.patikadev.Model;
 
 import com.patikadev.Helper.DBConnecter;
+import com.patikadev.Helper.Helper;
 import com.patikadev.Helper.Query;
 
 import java.sql.PreparedStatement;
@@ -48,7 +49,7 @@ public class Hotel implements Query {
                         rs.getString("country"),
                         rs.getString("city"),
                         rs.getString("address"),
-                        rs.getString("e-mail"),
+                        rs.getString("e_mail"),
                         rs.getString("phone"),
                         rs.getString("facilitys"),
                         rs.getInt("star"));
@@ -62,6 +63,7 @@ public class Hotel implements Query {
         return hotelList;
 
     }
+
     //**************************************************
     //id'ye sahip oteli getirir.
     public static Hotel getFetch(int id) {
@@ -96,9 +98,32 @@ public class Hotel implements Query {
 
     //Otel ekler.
     public static Boolean add(String name, String country, String city, String address, String e_mail, String phone,
-                              String facilitys, int star){
+                              String facilitys, int star) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(hotelAdd);
+            pr.setString(1, name);
+            pr.setString(2, country);
+            pr.setString(3, city);
+            pr.setString(4, address);
+            pr.setString(5, e_mail);
+            pr.setString(6, phone);
+            pr.setString(7, facilitys);
+            pr.setInt(8, star);
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
 
     }
+
     //**************************************************
     public int getId() {
         return id;

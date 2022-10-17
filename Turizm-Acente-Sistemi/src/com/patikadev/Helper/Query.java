@@ -18,10 +18,11 @@ public interface Query {
     String hostelWhereID = "Select * From hostel WHERE id = ?";
     String hotelWhereID = "SELECT * FROM hotel WHERE id = ?";
     String facilityWhereID = "SELECT * FROM facility WHERE id = ?";
+    String facilityWhereFeature = "SELECT * FROM facility WHERE feature = ?";
     String roomWhereID = "SELECT * FROM room WHERE id = ?";
     String reservationWhereID = "SELECT * FROM reservation WHERE id = ?";
     String customerWhereID = "SELECT * FROM customer WHERE id = ?";
     //**************************************************************
-    String hotelAdd="INSERT INTO hotel (name,country,city,address,e-mail,phone,facilitys,star) VALUES (?,?,?,?," +
+    String hotelAdd="INSERT INTO hotel (name,country,city,address,e_mail,phone,facilitys,star) VALUES (?,?,?,?," +
             "?,?,?,?)";
 }
