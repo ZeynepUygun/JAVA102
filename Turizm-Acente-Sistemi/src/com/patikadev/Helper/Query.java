@@ -23,6 +23,12 @@ public interface Query {
     String reservationWhereID = "SELECT * FROM reservation WHERE id = ?";
     String customerWhereID = "SELECT * FROM customer WHERE id = ?";
     //**************************************************************
+    //SQL veri ekleme sorguları.
     String hotelAdd="INSERT INTO hotel (name,country,city,address,e_mail,phone,facilitys,star) VALUES (?,?,?,?," +
             "?,?,?,?)";
+    //***************************************************************
+    //SQL veri güncelleme sorguları.
+    String hotelUpdate="UPDATE hotel SET name=?, country=?,city=?,address=?,e_mail=?,phone=?,facilitys=?,star=?  " +
+            "WHERE id = ?";
+    //***************************************************************
 }

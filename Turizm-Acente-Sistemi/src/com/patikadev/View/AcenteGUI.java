@@ -9,8 +9,11 @@ import com.patikadev.Model.Room;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AcenteGUI extends JFrame {
     protected String facilityAll;
@@ -91,10 +94,37 @@ public class AcenteGUI extends JFrame {
     private JLabel lbl_sh_hotelCity;
     private JComboBox cmb_hotel_star;
     private JLabel lbl_hotel_star;
+    private JLabel lbl_update_hoteName;
+    private JTextField fld_update_hotelName;
+    private JLabel lbl_update_hotelCountry;
+    private JTextField fld_update_hotelCountry;
+    private JLabel lbl_update_hotelCity;
+    private JTextField fld_update_hotelCity;
+    private JLabel lbl_update_hotelAddress;
+    private JTextField fld_update_hotelAddress;
+    private JLabel lbl_update_hotelEmail;
+    private JTextField fld_update_hotelEmail;
+    private JLabel lbl_update_hotelPhone;
+    private JTextField fld_update_hotelPhone;
+    private JLabel lbl_update_hotelStar;
+    private JComboBox cmb_update_hotelStar;
+    private JLabel lbl_update_facility;
+    private JCheckBox chck_update_carPark;
+    private JCheckBox chck_update_wifi;
+    private JCheckBox chck_update_fitnessCenter;
+    private JCheckBox chck_update_natatorium;
+    private JCheckBox chck_update_hotelConcierge;
+    private JCheckBox chck_update_spa;
+    private JCheckBox chck_update_roomService;
+    private JButton btn_update_hotel;
+    private JPanel pnl_update_hotel;
+    private JPanel pnl_update_button;
+    private JButton btn_update_exit;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private DefaultTableModel mdl_room_list;
     private Object[] row_room_list;
+    private int selected_hotelID;
 
 
     public AcenteGUI() {
@@ -104,18 +134,9 @@ public class AcenteGUI extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(Config.project_title);
         setVisible(true);
+        Hotel otel = new Hotel();
 
-        //Combobox'lara veriler atılır.
-        for (Hostel obj : Hostel.getList()) {
-
-            cmb_hostel.addItem(obj.getType());
-            cmb_edit_hostelType.addItem(obj.getType());
-        }
-        for (Hotel obj : Hotel.getList()) {
-            cmb_edit_hotelName.addItem(obj.getName());
-            cmb_hotel_name.addItem(obj.getName());
-        }
-        //**********************************************
+        cmbAddItem();
 
         //Tablo kolonlarının düzenlenmesi engellenir.
         mdl_hotel_list = new DefaultTableModel() {
@@ -161,10 +182,23 @@ public class AcenteGUI extends JFrame {
         tbl_room_list.getColumnModel().getColumn(0).setMaxWidth(50);
         tbl_room_list.getTableHeader().setReorderingAllowed(false);
         //***********************************************
+        //Otel tablosu mause dinleme.
+        tbl_hotel_list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point point = e.getPoint();
+                int selected_row = tbl_hotel_list.rowAtPoint(point);
+                tbl_hotel_list.setRowSelectionInterval(selected_row, selected_row);
+                setSelected_hotelID(Integer.parseInt(tbl_hotel_list.getValueAt(tbl_hotel_list.getSelectedRow(), 0).toString()));
+
+            }
+        });
+        //***********************************************
         btn_hotel_add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chckbox();
+                facilityAll = Hotel.facility(chck_carPark, chck_wifi, chck_natatorium, chck_fitness, chck_concierge, chck_spa,
+                        chck_roomService);
 
                 if (Helper.isFieldEmpty(fld_hotel_name) ||
                         Helper.isFieldEmpty(fld_hotel_country) ||
@@ -173,36 +207,28 @@ public class AcenteGUI extends JFrame {
                         Helper.isFieldEmpty(fld_hotel_email) ||
                         Helper.isFieldEmpty(fld_hotel_phone) ||
                         facilityAll.isEmpty() ||
-                        cmb_hotel_star.getSelectedItem()=="")
-                {
+                        cmb_hotel_star.getSelectedItem() == "") {
 
                     Helper.showMsg("empty");
 
-                }else {
-                    System.out.println("girdi");
-                    String name=fld_hotel_name.getText().trim().toUpperCase();
-                    String country=fld_hotel_country.getText().trim().toUpperCase();
-                    String city =fld_hotel_city.getText().trim().toUpperCase();
-                    String address="";
-                    String[] addressEdit=fld_hotel_address.getText().trim().split(" ");
-                    for(int i=0;i<addressEdit.length;i++){
+                } else {
+                    Hotel.dataPanel(fld_hotel_name, fld_hotel_country, fld_hotel_city, fld_hotel_address, fld_hotel_email
+                            , fld_hotel_phone, cmb_hotel_star);
 
-                        addressEdit[i]=addressEdit[i].substring(0,1).toUpperCase()+addressEdit[i].substring(1).toLowerCase()+" ";
-                        address=address.concat(addressEdit[i]);
-                    }
-                    System.out.println(address+"  "+addressEdit.toString());
-
-                    String e_mail=fld_hotel_email.getText().trim();
-                    String phone=fld_hotel_phone.getText().trim();
-
-                    int star= Integer.parseInt(cmb_hotel_star.getSelectedItem().toString());
-                    if(Helper.confirm("sure")){
-                        if(Hotel.add(name,country,city,address,e_mail,phone,facilityAll,star)){
+                    if (Helper.confirm("sure")) {
+                        if (Hotel.add(otel.getName(), otel.getCountry(), otel.getCity(), otel.getAddress(), otel.getE_mail(),
+                                otel.getPhone(),
+                                facilityAll, otel.getStar())) {
                             Helper.showMsg("done");
+
+                            Hotel.dataPanelClear(fld_hotel_name, fld_hotel_country, fld_hotel_city, fld_hotel_address, fld_hotel_email
+                                    , fld_hotel_phone, cmb_hotel_star, chck_carPark, chck_wifi, chck_natatorium, chck_fitness, chck_concierge, chck_spa,
+                                    chck_roomService);
+
                             loadHotelModel();
 
                         }
-                    }else {
+                    } else {
                         Helper.showMsg("Ekleme işlemi iptal edildi.");
                     }
 
@@ -212,8 +238,52 @@ public class AcenteGUI extends JFrame {
             }
 
         });
-        //************************************************
+        btn_update_hotel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                facilityAll = Hotel.facility(chck_update_carPark, chck_update_wifi, chck_update_natatorium,
+                        chck_update_fitnessCenter,
+                        chck_update_hotelConcierge, chck_update_spa, chck_update_roomService);
 
+                if (Helper.isFieldEmpty(fld_update_hotelName) ||
+                        Helper.isFieldEmpty(fld_update_hotelCountry) ||
+                        Helper.isFieldEmpty(fld_update_hotelCity) ||
+                        Helper.isFieldEmpty(fld_update_hotelAddress) ||
+                        Helper.isFieldEmpty(fld_update_hotelEmail) ||
+                        Helper.isFieldEmpty(fld_update_hotelPhone) ||
+                        facilityAll.isEmpty() ||
+                        cmb_update_hotelStar.getSelectedItem() == "") {
+                    Helper.showMsg("empty");
+                } else {
+                    Hotel.dataPanel(fld_update_hotelName, fld_update_hotelCountry, fld_update_hotelCity,
+                            fld_update_hotelAddress, fld_update_hotelEmail, fld_update_hotelPhone,
+                            cmb_update_hotelStar);
+
+
+                    if (Helper.confirm("sure")) {
+
+                        if (Hotel.update(getSelected_hotelID(), otel.getName(), otel.getCountry(), otel.getCity(), otel.getAddress(),
+                                otel.getE_mail(),
+                                otel.getPhone(),
+                                facilityAll, otel.getStar())) {
+                            Helper.showMsg("done");
+
+
+                            Hotel.dataPanelClear(fld_update_hotelName, fld_update_hotelCountry, fld_update_hotelCity,
+                                    fld_update_hotelAddress, fld_update_hotelEmail
+                                    , fld_update_hotelPhone, cmb_update_hotelStar, chck_update_carPark, chck_update_wifi,
+                                    chck_update_natatorium,
+                                    chck_update_fitnessCenter, chck_update_hotelConcierge, chck_update_spa,
+                                    chck_update_roomService);
+
+                            loadHotelModel();
+
+                        }
+
+                    }
+                }
+            }
+        });
 
     }
 
@@ -259,41 +329,28 @@ public class AcenteGUI extends JFrame {
         }
     }
 
-    //Checkbox işlemleri.
-    public void chckbox() {
-        facilityAll = "";
-        if (chck_carPark.isSelected()) {
-            int id = Facility.getFetch(chck_carPark.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+    //Combobox'lara veriler atılır.
+    public void cmbAddItem() {
+
+        for (Hostel obj : Hostel.getList()) {
+
+            cmb_hostel.addItem(obj.getType());
+            cmb_edit_hostelType.addItem(obj.getType());
         }
-        if (chck_wifi.isSelected()) {
-            int id = Facility.getFetch(chck_wifi.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+        for (Hotel obj : Hotel.getList()) {
+            cmb_edit_hotelName.addItem(obj.getName());
+            cmb_hotel_name.addItem(obj.getName());
         }
-        if (chck_natatorium.isSelected()) {
-            int id = Facility.getFetch(chck_natatorium.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
-        }
-        if (chck_fitness.isSelected()) {
-            int id = Facility.getFetch(chck_fitness.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
-        }
-        if (chck_concierge.isSelected()) {
-            int id = Facility.getFetch(chck_concierge.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
-        }
-        if (chck_spa.isSelected()) {
-            int id = Facility.getFetch(chck_spa.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
-        }
-        if (chck_roomService.isSelected()) {
-            int id = Facility.getFetch(chck_roomService.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
-        }
-        facilityAll = facilityAll.trim();
 
     }
-    //************************************************
+    //**********************************************
 
 
+    public int getSelected_hotelID() {
+        return selected_hotelID;
+    }
+
+    public void setSelected_hotelID(int selected_hotelID) {
+        this.selected_hotelID = selected_hotelID;
+    }
 }
