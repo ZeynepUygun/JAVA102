@@ -21,15 +21,12 @@ public class AcenteGUI extends JFrame {
     private JScrollPane scrl_acente;
     private JPanel pnl_information;
     private JLabel lbl_image;
-    private JTabbedPane tabbedPane1;
-    private JPanel tbpnl_hotel_table;
+    private JTabbedPane tbpnl_reservation;
+    private JPanel pnl_hotel_table;
     private JPanel pnl_room_table;
-    private JPanel tbpnl_add;
-    private JTabbedPane tabbedPane2;
     private JTable tbl_room_list;
     private JScrollPane scrl_hotel_Add;
     private JPanel pnl_hotel_Add;
-    private JScrollPane scrl_room_add;
     private JPanel pnl_room_add;
     private JTextField fld_hotel_name;
     private JLabel lbl_hotel_country;
@@ -51,10 +48,10 @@ public class AcenteGUI extends JFrame {
     private JCheckBox chck_spa;
     private JCheckBox chck_roomService;
     private JLabel lbl_hotel_name;
-    private JComboBox cmb_hotel_name;
+    private JComboBox<String> cmb_hotel_name;
     private JLabel lbl_hotel;
     private JLabel lbl_hostel;
-    private JComboBox cmb_hostel;
+    private JComboBox<String> cmb_hostel;
     private JLabel lbl_room_piece;
     private JTextField fld_room_piece;
     private JTextField fld_bed_count;
@@ -73,14 +70,14 @@ public class AcenteGUI extends JFrame {
     private JLabel lbl_edit_bedCount;
     private JLabel lbl_edit_roomPiece;
     private JLabel lbl_edit_roomtype;
-    private JComboBox cmb_update_hotelName;
-    private JComboBox cmb_update_roomhostel;
-    private JTextField fld_update_bedCount;
+    //private JComboBox<String> cmb_update_hotelName;
+    private JComboBox<String> cmb_update_roomhostel;
+    private JTextField fld_update_roombed;
     private JComboBox cmb_update_roomType;
     private JLabel lbl_edit_firstSeason;
     private JLabel lbl_edit_thenSeason;
-    private JTextField fld_update_firstSeason;
-    private JTextField fld_update_thenSeason;
+    private JTextField fld_update_roomfirstSeason;
+    private JTextField fld_update_roomthenSeason;
     private JButton btn_update_room;
     private JScrollPane scrl_hotel_list;
     private JPanel pnl_hotel_list;
@@ -122,6 +119,29 @@ public class AcenteGUI extends JFrame {
     private JButton btn_update_hotelShow;
     private JButton btn_update_roomShow;
     private JTextField fld_update_roomPiece;
+    private JComboBox cmb_update_roomhotel;
+    private JScrollPane scrl_room_list;
+    private JPanel pnl_sh_room;
+    private JPanel pnl_sh_reservation;
+    private JLabel lbl_sh_reservationName;
+    private JTextField fld_sh_reservationName;
+    private JLabel lbl_sh_adult;
+    private JTextField fld_sh_adult;
+    private JTextField fld_sh_child;
+    private JLabel lbl_sh_child;
+    private JLabel lbl_sh_inputDate;
+    private JTextField fld_sh_inputDate;
+    private JLabel lbl_sh_outDate;
+    private JTextField fld_sh_outDate;
+    private JButton btn_sh_rezervation;
+    private JPanel pnl_menu;
+    private JButton btn_hotel;
+    private JButton btn_room;
+    private JButton btn_reservation;
+    private JTabbedPane tbpnl_hotel;
+    private JTabbedPane tbpnl_room;
+    private JTable tbl_rezervation_list;
+    private JScrollPane pnl_reservation_list;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private DefaultTableModel mdl_room_list;
@@ -186,6 +206,7 @@ public class AcenteGUI extends JFrame {
 
         tbl_room_list.setModel(mdl_room_list);
         tbl_room_list.getColumnModel().getColumn(0).setMaxWidth(50);
+        tbl_room_list.getColumnModel().getColumn(1).setMaxWidth(50);
         tbl_room_list.getTableHeader().setReorderingAllowed(false);
         //***********************************************
         //Otel tablosu mause dinleme.
@@ -229,10 +250,23 @@ public class AcenteGUI extends JFrame {
         tbl_room_list.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Point point = new Point();
-                int selected_room_row = tbl_room_list.rowAtPoint(point);
-                tbl_room_list.setRowSelectionInterval(selected_room_row, selected_room_row);
-                setSelected_roomID(Integer.parseInt(tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(), 0).toString()));
+                if (pnl_room_update.isVisible()) {
+
+                    Point point = e.getPoint();
+                    int selected_room_row = tbl_room_list.rowAtPoint(point);
+                    tbl_room_list.setRowSelectionInterval(selected_room_row, selected_room_row);
+                    setSelected_roomID(Integer.parseInt(tbl_room_list.getValueAt(tbl_room_list.getSelectedRow(), 0).toString()));
+
+                    Room room = Room.getFetch(getSelected_roomID());
+                    cmb_update_roomhotel.setSelectedItem(Hotel.getFetch(room.getHotel_id()).getName());
+                    cmb_update_roomhostel.setSelectedItem(Hostel.getFetch(room.getHostel_id()).getType());
+                    fld_update_roombed.setText(String.valueOf(room.getBed()));
+                    fld_update_roomPiece.setText(String.valueOf(room.getPiece()));
+                    cmb_update_roomType.setSelectedItem(room.getType());
+                    fld_update_roomfirstSeason.setText(String.valueOf(room.getFirstSeason()));
+                    fld_update_roomthenSeason.setText(String.valueOf(room.getThenSeason()));
+                }
+
 
             }
         });
@@ -278,7 +312,7 @@ public class AcenteGUI extends JFrame {
                             Helper.showMsg("done");
                             cmb_hotel_name.addItem(otel.getName());
 
-                            otel.dataPanelClear(fld_hotel_name, fld_hotel_country, fld_hotel_city, fld_hotel_address, fld_hotel_email
+                            Hotel.dataPanelClear(fld_hotel_name, fld_hotel_country, fld_hotel_city, fld_hotel_address, fld_hotel_email
                                     , fld_hotel_phone, cmb_hotel_star, chck_carPark, chck_wifi, chck_natatorium, chck_fitness, chck_concierge, chck_spa,
                                     chck_roomService);
 
@@ -338,11 +372,7 @@ public class AcenteGUI extends JFrame {
                             Helper.showMsg("done");
 
 
-                            otel.dataPanelClear(fld_update_hotelName, fld_update_hotelCountry, fld_update_hotelCity,
-                                    fld_update_hotelAddress, fld_update_hotelEmail
-                                    , fld_update_hotelPhone, cmb_update_hotelStar, chck_update_facility[0], chck_update_facility[1], chck_update_facility[2],
-                                    chck_update_facility[3],
-                                    chck_update_facility[4], chck_update_facility[5], chck_update_facility[6]);
+                            pnl_update_hotel.setVisible(false);
 
                             loadHotelModel();
 
@@ -358,13 +388,15 @@ public class AcenteGUI extends JFrame {
                 if (pnl_update_hotel.isVisible()) {
                     pnl_update_hotel.setVisible(false);
                 } else {
-                    pnl_update_hotel.setVisible(true);
+                    Helper.showMsg("Tablodan güncellenecek veriyi seçiniz.");
+
                     Hotel.dataPanelClear(fld_update_hotelName, fld_update_hotelCountry, fld_update_hotelCity,
                             fld_update_hotelAddress, fld_update_hotelEmail
                             , fld_update_hotelPhone, cmb_update_hotelStar, chck_update_facility[0], chck_update_facility[1], chck_update_facility[2],
                             chck_update_facility[3],
 
                             chck_update_facility[4], chck_update_facility[5], chck_update_facility[6]);
+                    pnl_update_hotel.setVisible(true);
                 }
             }
         });
@@ -405,7 +437,37 @@ public class AcenteGUI extends JFrame {
         btn_update_room.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                if (cmb_update_roomhotel.getSelectedIndex() == 0 ||
+                        cmb_update_roomhostel.getSelectedIndex() == 0 ||
+                        Helper.isFieldEmpty(fld_update_roombed) ||
+                        Helper.isFieldEmpty(fld_update_roomPiece) ||
+                        cmb_update_roomType.getSelectedIndex() == 0 ||
+                        Helper.isFieldEmpty(fld_update_roomfirstSeason) ||
+                        Helper.isFieldEmpty(fld_update_roomthenSeason)
+                ) {
+                    Helper.showMsg("empty");
+                } else {
+                    if (Helper.confirm("sure")) {
+                        int hotel_id = Hotel.getFetch(cmb_update_roomhotel.getSelectedItem().toString()).getId();
+                        int hostel_id = Hostel.getFetch(cmb_update_roomhostel.getSelectedItem().toString()).getId();
+                        int bed = Integer.valueOf(fld_update_roombed.getText());
+                        int piece = Integer.valueOf(fld_update_roomPiece.getText());
+                        String type = cmb_update_roomType.getSelectedItem().toString();
+                        int firstSeason = Integer.valueOf(fld_update_roomfirstSeason.getText());
+                        int thenSeason = Integer.valueOf(fld_update_roomthenSeason.getText());
+                        if (Room.update(getSelected_roomID(), hotel_id, hostel_id, bed, piece, type, firstSeason, thenSeason)) {
+                            Helper.showMsg("done");
+                            loadRoomModel();
+
+
+                            pnl_room_update.setVisible(false);
+                        } else {
+                            Helper.showMsg("İstenmeyen bir hata oluştu.");
+                        }
+                    } else {
+                        Helper.showMsg("iptal");
+                    }
+                }
             }
         });
         btn_update_roomShow.addActionListener(new ActionListener() {
@@ -414,9 +476,42 @@ public class AcenteGUI extends JFrame {
                 if (pnl_room_update.isVisible()) {
                     pnl_room_update.setVisible(false);
                 } else {
+                    Helper.showMsg("Tablodan güncellenecek veriyi seçiniz.");
+                    Room.pnlRoomClear(cmb_update_roomhotel, cmb_update_roomhostel, fld_update_roombed,
+                            fld_update_roomPiece, cmb_update_roomType, fld_update_roomfirstSeason, fld_update_roomthenSeason);
                     pnl_room_update.setVisible(true);
-                    Room.pnlRoomClear(cmb_update_hotelName, cmb_update_roomhostel, fld_update_bedCount,
-                            fld_update_roomPiece, cmb_update_roomType, fld_update_firstSeason, fld_update_thenSeason);
+
+                }
+            }
+        });
+        btn_hotel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tbpnl_hotel.isVisible() == false) {
+                    tbpnl_reservation.setVisible(false);
+                    tbpnl_room.setVisible(false);
+                    tbpnl_hotel.setVisible(true);
+
+                }
+            }
+        });
+        btn_room.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tbpnl_room.isVisible() == false) {
+                    tbpnl_hotel.setVisible(false);
+                    tbpnl_reservation.setVisible(false);
+                    tbpnl_room.setVisible(true);
+                }
+            }
+        });
+        btn_reservation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tbpnl_reservation.isVisible() == false) {
+                    tbpnl_hotel.setVisible(false);
+                    tbpnl_room.setVisible(false);
+                    tbpnl_reservation.setVisible(true);
                 }
             }
         });
@@ -455,7 +550,7 @@ public class AcenteGUI extends JFrame {
             i = 0;
             row_room_list[i++] = obj.getId();
 
-            row_room_list[i++]=obj.getHotel_id();
+            row_room_list[i++] = obj.getHotel_id();
             row_room_list[i++] = obj.getHostel().getType();
             row_room_list[i++] = obj.getPiece();
             row_room_list[i++] = obj.getType();
@@ -475,8 +570,10 @@ public class AcenteGUI extends JFrame {
             cmb_update_roomhostel.addItem(obj.getType());
         }
         for (Hotel obj : Hotel.getList()) {
-            cmb_update_hotelName.addItem(obj.getName());
-            cmb_hotel_name.addItem(obj.getName());
+            String name = obj.getName();
+
+            cmb_hotel_name.addItem(name);
+            cmb_update_roomhotel.addItem(name);
         }
 
     }
@@ -498,4 +595,6 @@ public class AcenteGUI extends JFrame {
     public void setSelected_roomID(int selected_roomID) {
         this.selected_roomID = selected_roomID;
     }
+
+
 }

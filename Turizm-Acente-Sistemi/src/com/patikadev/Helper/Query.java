@@ -34,5 +34,7 @@ public interface Query {
     //SQL veri güncelleme sorguları.
     String hotelUpdate = "UPDATE hotel SET name=?, country=?,city=?,address=?,e_mail=?,phone=?,facilitys=?,star=?  " +
             "WHERE id = ?";
+    String roomUpdate = "UPDATE room SET hotel_id=?, hostel_id=?,bed=?,piece=?,type=?,firstseason=?,thenseason=?  " +
+            "WHERE id = ?";
     //***************************************************************
 }

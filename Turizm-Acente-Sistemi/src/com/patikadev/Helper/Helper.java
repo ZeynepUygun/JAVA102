@@ -60,6 +60,10 @@ public class Helper {
                 msg="İşlem Başarılı";
                 title="Sonuç";
                 break;
+            case "iptal":
+                msg="İşlemiptal edildi.";
+                title="Sonuç";
+                break;
             default:
                 msg=str;
                 title="Uyarı";

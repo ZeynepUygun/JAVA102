@@ -119,6 +119,35 @@ public class Room implements Query {
 
     }
     //**************************************************
+    //Güncelleme yapar.
+    public static Boolean update(int id,int hotel_id, int hostel_id, int bed, int piece, String type, int firstSeason,
+                            int thenSeason) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(roomUpdate);
+            pr.setInt(1, hotel_id);
+            pr.setInt(2, hostel_id);
+            pr.setInt(3, bed);
+            pr.setInt(4, piece);
+            pr.setString(5, type);
+            pr.setInt(6, firstSeason);
+            pr.setInt(7, thenSeason);
+            pr.setInt(8, id);
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
+    //**************************************************
+    //Panel verilerini temizler.
     public static Boolean pnlRoomClear(JComboBox hotel_name,JComboBox hostel,JTextField bed,JTextField piece,
                                        JComboBox type,JTextField firstSeason,JTextField thenSeason){
         hotel_name.setSelectedIndex(0);
@@ -131,6 +160,7 @@ public class Room implements Query {
         return true;
 
     }
+    //**************************************************
 
 
     public int getId() {
