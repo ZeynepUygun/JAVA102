@@ -56,7 +56,28 @@ public class Hostel implements Query {
             pr.setInt(1, id);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
-                obj = new Hostel(rs.getInt(id), rs.getString("type"));
+                obj = new Hostel(rs.getInt("id"), rs.getString("type"));
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+    }
+
+    //**************************************************
+    //Pansiyon tipine sahip id'yi getirir.
+    public static Hostel getFetch(String type) {
+        Hostel obj = null;
+
+
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(hostelWhereType);
+            pr.setString(1, type);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                obj = new Hostel(rs.getInt("id"), rs.getString("type"));
             }
             rs.close();
             pr.getConnection().close();

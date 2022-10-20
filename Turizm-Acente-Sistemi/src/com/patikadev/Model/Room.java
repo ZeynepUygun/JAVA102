@@ -3,6 +3,7 @@ package com.patikadev.Model;
 import com.patikadev.Helper.DBConnecter;
 import com.patikadev.Helper.Query;
 
+import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,8 +52,8 @@ public class Room implements Query {
                         rs.getInt("bed"),
                         rs.getInt("piece"),
                         rs.getString("type"),
-                        rs.getInt("firstSeason(TL)"),
-                        rs.getInt("thenSeason(TL)"));
+                        rs.getInt("firstseason"),
+                        rs.getInt("thenseason"));
                 roomList.add(obj);
             }
             rs.close();
@@ -79,8 +80,8 @@ public class Room implements Query {
                         rs.getInt("bed"),
                         rs.getInt("piece"),
                         rs.getString("type"),
-                        rs.getInt("firstSeason(TL)"),
-                        rs.getInt("thenSeason(TL)"));
+                        rs.getInt("firstseason"),
+                        rs.getInt("thenseason"));
             }
             rs.close();
             pr.getConnection().close();
@@ -90,7 +91,47 @@ public class Room implements Query {
         return obj;
 
     }
+
     //************************************************
+    //Oda ekler.
+    public static Boolean add(int hotel_id, int hostel_id, int bed, int piece, String type, int firstSeason, int thenSeason) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(roomAdd);
+            pr.setInt(1, hotel_id);
+            pr.setInt(2, hostel_id);
+            pr.setInt(3, bed);
+            pr.setInt(4, piece);
+            pr.setString(5, type);
+            pr.setInt(6, firstSeason);
+            pr.setInt(7, thenSeason);
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
+    //**************************************************
+    public static Boolean pnlRoomClear(JComboBox hotel_name,JComboBox hostel,JTextField bed,JTextField piece,
+                                       JComboBox type,JTextField firstSeason,JTextField thenSeason){
+        hotel_name.setSelectedIndex(0);
+        hostel.setSelectedIndex(0);
+        bed.setText("");
+        piece.setText("");
+        type.setSelectedIndex(0);
+        firstSeason.setText("");
+        thenSeason.setText("");
+        return true;
+
+    }
+
 
     public int getId() {
         return id;

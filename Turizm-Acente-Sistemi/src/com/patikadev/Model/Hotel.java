@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Hotel implements Query {
     private static String address;
@@ -86,7 +87,37 @@ public class Hotel implements Query {
                         rs.getString("country"),
                         rs.getString("city"),
                         rs.getString("address"),
-                        rs.getString("e-mail"),
+                        rs.getString("e_mail"),
+                        rs.getString("phone"),
+                        rs.getString("facilitys"),
+                        rs.getInt("star"));
+
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+    }
+    //**************************************************
+    //Otel ismine göre id'yi getirir.
+    public static Hotel getFetch(String name) {
+        Hotel obj = null;
+
+
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(hotelWhereName);
+            pr.setString(1, name);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                obj = new Hotel(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("country"),
+                        rs.getString("city"),
+                        rs.getString("address"),
+                        rs.getString("e_mail"),
                         rs.getString("phone"),
                         rs.getString("facilitys"),
                         rs.getInt("star"));
@@ -154,54 +185,75 @@ public class Hotel implements Query {
     }
 
     //**************************************************
-    //Otel özelliklerinin id'lerini String değişkene atar.
-    public static String facility(JCheckBox carPark, JCheckBox wifi, JCheckBox natatorium, JCheckBox fitness,
-                                  JCheckBox concierge,
-                                  JCheckBox spa, JCheckBox roomService) {
-        String facilityAll = "";
+    //Otel özelliklerinin id'lerini matrise atar.
+    public static int[] facility(JCheckBox carPark, JCheckBox wifi, JCheckBox natatorium,
+                                 JCheckBox fitness,
+                                 JCheckBox concierge,
+                                 JCheckBox spa, JCheckBox roomService) {
 
+        int[] facilityAll = new int[7];
+        int i = 0;
         if (carPark.isSelected()) {
             int id = Facility.getFetch(carPark.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (wifi.isSelected()) {
             int id = Facility.getFetch(wifi.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (natatorium.isSelected()) {
             int id = Facility.getFetch(natatorium.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (fitness.isSelected()) {
             int id = Facility.getFetch(fitness.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (concierge.isSelected()) {
             int id = Facility.getFetch(concierge.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (spa.isSelected()) {
             int id = Facility.getFetch(spa.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
         if (roomService.isSelected()) {
             int id = Facility.getFetch(roomService.getText()).getId();
-            facilityAll = facilityAll + Integer.valueOf(id);
+            facilityAll[i] = id;
+            i++;
         }
-        facilityAll = facilityAll.trim();
+
         return facilityAll;
 
     }
 
     //************************************************
-    //Arayüzdeki otel verilerini değişkene atar.
-    public static boolean dataPanel(JTextField name, JTextField country, JTextField city, JTextField address,
-                                    JTextField e_mail,
-                                    JTextField phone, JComboBox star) {
-        Hotel otel = new Hotel();
-        otel.setName(name.getText().trim().toUpperCase());
-        otel.setCountry(country.getText().trim().toUpperCase());
-        otel.setCity(city.getText().trim().toUpperCase());
+    //Otel özelliklerinin id'lerini String değişkene atar.
+    public static String facility(int facility[]) {
+        String result = "";
+        for (int i = 0; i < facility.length; i++) {
+            if (facility[i] != 0) {
+                result = result.concat(String.valueOf(facility[i]));
+            }
+        }
+        return result.trim();
+    }
+
+    //************************************************
+    //Arayüzdeki otel verilerini düzenleyip değişkene atar.
+    public void dataPanel(JTextField name, JTextField country, JTextField city, JTextField address,
+                          JTextField e_mail,
+                          JTextField phone, JComboBox star) {
+
+        setName(name.getText().trim().toUpperCase());
+        setCountry(country.getText().trim().toUpperCase());
+        setCity(city.getText().trim().toUpperCase());
         String addressAll = "";
         String[] addressEdit = address.getText().trim().split(" ");
         for (int i = 0; i < addressEdit.length; i++) {
@@ -209,13 +261,13 @@ public class Hotel implements Query {
             addressEdit[i] = addressEdit[i].substring(0, 1).toUpperCase() + addressEdit[i].substring(1).toLowerCase() + " ";
             addressAll = addressAll.concat(addressEdit[i]);
         }
-        otel.setAddress(addressAll);
+        setAddress(addressAll);
 
-        otel.setE_mail(e_mail.getText().trim());
-        otel.setPhone(phone.getText().trim());
+        setE_mail(e_mail.getText().trim());
+        setPhone(phone.getText().trim());
 
-        otel.setStar(Integer.parseInt(star.getSelectedItem().toString()));
-        return true;
+        setStar(Integer.parseInt(star.getSelectedItem().toString()));
+
 
     }
 
@@ -244,12 +296,14 @@ public class Hotel implements Query {
         return true;
 
     }
+    //************************************************
+
 
     public static String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public static void setAddress(String address) {
         Hotel.address = address;
     }
 
