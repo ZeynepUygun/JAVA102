@@ -161,6 +161,32 @@ public class Room implements Query {
 
     }
     //**************************************************
+    public static ArrayList<Room> getListNonReserve(String data,String inputDate,String outDate) {
+        ArrayList<Room> roomList = new ArrayList<>();
+        Room obj;
+
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(roomListQuery);
+            ResultSet rs = pr.executeQuery();
+
+            while (rs.next()) {
+                obj = new Room(rs.getInt("id"),
+                        rs.getInt("hotel_id"),
+                        rs.getInt("hostel_id"),
+                        rs.getInt("bed"),
+                        rs.getInt("piece"),
+                        rs.getString("type"),
+                        rs.getInt("firstseason"),
+                        rs.getInt("thenseason"));
+                roomList.add(obj);
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return roomList;
+    }
 
 
     public int getId() {

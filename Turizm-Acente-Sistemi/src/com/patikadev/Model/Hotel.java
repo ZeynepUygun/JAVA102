@@ -355,6 +355,17 @@ public class Hotel implements Query {
     public String getFacilitys() {
         return facilitys;
     }
+    public String getAllFacilitiy(){
+        String allFacility="";
+        String facilitys[]=getFacilitys().split("");
+        for(int i=0;i<getFacilitys().length();i++){
+            allFacility=allFacility.concat(Facility.getFetch(Integer.valueOf(facilitys[i])).getFeature());
+            if(i<getFacilitys().length()-1){
+                allFacility=allFacility.concat(", ");
+            }
+        }
+        return allFacility;
+    }
 
     public void setFacilitys(String facilitys) {
         this.facilitys = facilitys;

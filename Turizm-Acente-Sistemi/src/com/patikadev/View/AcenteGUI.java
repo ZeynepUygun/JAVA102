@@ -2,17 +2,19 @@ package com.patikadev.View;
 
 import com.patikadev.Helper.Config;
 import com.patikadev.Helper.Helper;
-import com.patikadev.Model.Hostel;
-import com.patikadev.Model.Hotel;
-import com.patikadev.Model.Room;
+import com.patikadev.Helper.MyDateChooser;
+import com.patikadev.Model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
+import static com.patikadev.Model.Reservation.getList;
 
 public class AcenteGUI extends JFrame {
     protected int[] facilityAll;
@@ -122,7 +124,7 @@ public class AcenteGUI extends JFrame {
     private JComboBox cmb_update_roomhotel;
     private JScrollPane scrl_room_list;
     private JPanel pnl_sh_room;
-    private JPanel pnl_sh_reservation;
+    private JPanel pnl_reservation;
     private JLabel lbl_sh_reservationName;
     private JTextField fld_sh_reservationName;
     private JLabel lbl_sh_adult;
@@ -141,13 +143,39 @@ public class AcenteGUI extends JFrame {
     private JTabbedPane tbpnl_hotel;
     private JTabbedPane tbpnl_room;
     private JTable tbl_rezervation_list;
-    private JScrollPane pnl_reservation_list;
+    private JButton btn_inputDate;
+    private JButton btn_outDate;
+    private JPanel pnl_sh_reservation;
+    private JPanel pnl_rezervation_information;
+    private JLabel lbl_rezervation_hotelName;
+    private JLabel lbl_rezervation_hotelName_information;
+    private JLabel lbl_rezervation_address;
+    private JLabel lbl_rezervation_address_information;
+    private JLabel lbl_rezervation_email;
+    private JLabel lbl_rezervation_email_information;
+    private JLabel lbl_rezervation_phone;
+    private JLabel lbl_rezervation_phone_information;
+    private JLabel lbl_rezervation_star;
+    private JLabel lbl_rezervation_star_information;
+    private JLabel lbl_rezervation_hostel;
+    private JLabel lbl_rezervation_hostel_information;
+    private JLabel lbl_rezervation_facility;
+    private JLabel lbl_rezervation_facility_information;
+    private JLabel lbl_rezervation_bed;
+    private JLabel lbl_rezervation_bed_information;
+    private JLabel lbl_rezervation_roomType;
+    private JLabel lbl_rezervation_roomType_information;
+    private JButton btn_addRezervasyon;
     private DefaultTableModel mdl_hotel_list;
     private Object[] row_hotel_list;
     private DefaultTableModel mdl_room_list;
     private Object[] row_room_list;
+    private DefaultTableModel mdl_resevation_list;
+    private Object[] row_reservation_list;
     private int selected_hotelID;
     private int selected_roomID;
+    private Date last_date;
+    private int rezervation_room = 0;
 
 
     public AcenteGUI() {
@@ -158,7 +186,7 @@ public class AcenteGUI extends JFrame {
         setTitle(Config.project_title);
         setVisible(true);
 
-
+        System.out.println(getRezervation_room());
         cmbAddItem();
         JCheckBox[] chck_update_facility = {chck_update_carPark, chck_update_wifi, chck_update_natatorium,
                 chck_update_fitnessCenter,
@@ -175,6 +203,15 @@ public class AcenteGUI extends JFrame {
             }
         };
         mdl_room_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+        mdl_resevation_list = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 if (column == 0) {
@@ -209,6 +246,20 @@ public class AcenteGUI extends JFrame {
         tbl_room_list.getColumnModel().getColumn(1).setMaxWidth(50);
         tbl_room_list.getTableHeader().setReorderingAllowed(false);
         //***********************************************
+        //Reservstion tablosu için kolon isimleri verilir.
+        Object[] col_reservation_list = {"ID", "Otel", "Pansiyon Tipi", "Kalan Stok", "Tipi", "Ocak-Mayıs (TL)",
+                "Nisan" +
+                        "-Aralik (TL)"};
+        mdl_resevation_list.setColumnIdentifiers(col_reservation_list);
+        row_reservation_list = new Object[col_reservation_list.length];
+
+
+        tbl_rezervation_list.setModel(mdl_resevation_list);
+        tbl_rezervation_list.getColumnModel().getColumn(0).setMaxWidth(50);
+        tbl_rezervation_list.getColumnModel().getColumn(1).setMaxWidth(50);
+        tbl_rezervation_list.getTableHeader().setReorderingAllowed(false);
+        //***********************************************
+
         //Otel tablosu mause dinleme.
         tbl_hotel_list.addMouseListener(new MouseAdapter() {
             @Override
@@ -266,6 +317,32 @@ public class AcenteGUI extends JFrame {
                     fld_update_roomfirstSeason.setText(String.valueOf(room.getFirstSeason()));
                     fld_update_roomthenSeason.setText(String.valueOf(room.getThenSeason()));
                 }
+
+
+            }
+        });
+        tbl_rezervation_list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point point = e.getPoint();
+                int selected_room_row = tbl_rezervation_list.rowAtPoint(point);
+                tbl_rezervation_list.setRowSelectionInterval(selected_room_row, selected_room_row);
+                setRezervation_room(Integer.parseInt(tbl_rezervation_list.getValueAt(tbl_rezervation_list.getSelectedRow(), 0).toString()));
+
+                Room room = Room.getFetch(getRezervation_room());
+
+                lbl_rezervation_hotelName_information.setText(room.getHotel().getName());
+                lbl_rezervation_star_information.setText(String.valueOf(room.getHotel().getStar()));
+                lbl_rezervation_email_information.setText(room.getHotel().getE_mail());
+                lbl_rezervation_phone_information.setText(room.getHotel().getPhone());
+                lbl_rezervation_address_information.setText(room.getHotel().getAddress());
+
+
+                lbl_rezervation_facility_information.setText(room.getHotel().getAllFacilitiy());
+
+                lbl_rezervation_hostel_information.setText(room.getHostel().getType());
+                lbl_rezervation_bed_information.setText(String.valueOf(room.getBed()));
+                lbl_rezervation_roomType_information.setText(room.getType());
 
 
             }
@@ -422,8 +499,7 @@ public class AcenteGUI extends JFrame {
                         int first = Integer.parseInt(fld_room_firstSeason.getText());
                         int then = Integer.parseInt(fld_roo_thenSeason.getText());
                         System.out.println(first);
-                        if (Room.add(hotel_id, hostel_id, bed, piece,
-                                cmb_room_type.getSelectedItem().toString(), first, then)) {
+                        if (Room.add(hotel_id, hostel_id, bed, piece, cmb_room_type.getSelectedItem().toString(), first, then)) {
                             Helper.showMsg("done");
                             loadRoomModel();
                             pnl_room_table.setVisible(true);
@@ -515,10 +591,98 @@ public class AcenteGUI extends JFrame {
                 }
             }
         });
+        fld_sh_inputDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+        });
+        btn_inputDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                MyDateChooser ch = new MyDateChooser(new JFrame(), 0, 10);
+
+
+                Date now = new Date();
+                Date select = new Date();
+                select = ch.select();
+                if (select != null) {
+                    last_date = new Date(select.getTime());
+
+                    if (now.getTime() > last_date.getTime()) {
+                        Helper.showMsg("Gelecek zamana ait tarih bilgisi girmelisiniz!");
+
+                    } else {
+                        fld_sh_inputDate.setText(ch.getSelectedDay() + "." + ch.getSelectedMonth() + "." + ch.getSelectedYear());
+                    }
+
+                }
+            }
+        });
+        btn_outDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (Objects.equals(fld_sh_inputDate.getText(), " Tarih Seçiniz.    ")) {
+                    Helper.showMsg("Önce giriş tarihini seçiniz!");
+                } else {
+                    MyDateChooser ch = new MyDateChooser(new JFrame(), 10, 10);
+                    if (last_date.getTime() > ch.select().getTime()) {
+                        Helper.showMsg("Gelecek zamana ait tarih bilgisi girmelisiniz!");
+
+                    } else {
+                        fld_sh_outDate.setText(ch.getSelectedDay() + "." + ch.getSelectedMonth() + "." + ch.getSelectedYear());
+                    }
+                }
+            }
+        });
+        btn_addRezervasyon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Objects.equals(fld_sh_inputDate.getText(), "Tarih Seçiniz.    ") || Objects.equals(fld_sh_outDate.getText(), "Tarih Seçiniz.    ") || getRezervation_room() == 0) {
+                    Helper.showMsg("empty");
+                } else {
+                    if (Helper.confirm("sure")) {
+                        if (Reservation.add(getRezervation_room(), "YES", fld_sh_inputDate.getText(),
+                                fld_sh_outDate.getText(), Integer.valueOf(fld_sh_child.getText()),
+                                Integer.valueOf(fld_sh_adult.getText()))) {
+                            Helper.showMsg("done");
+                        }
+                    }
+                }
+            }
+        });
+
+        btn_sh_rezervation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println(fld_sh_inputDate.getText());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+                Date inputDate = null;
+                Date outDate = null;
+                try {
+                    inputDate = simpleDateFormat.parse(fld_sh_inputDate.getText());
+                    outDate = simpleDateFormat.parse(fld_sh_outDate.getText());
+                    loadReservationModel(inputDate, outDate);
+                } catch (ParseException k) {
+                    throw new RuntimeException(k);
+                }
+
+
+            }
+        });
     }
 
     public static void main(String[] args) {
         Helper.setLayout();
+
+        MyDateChooser ch = new MyDateChooser(new JFrame(), 0, 10);
+        //ch.select();
+        //GregorianCalendar calendar = new GregorianCalendar();
+        System.out.println(ch.getSelectedDay());
         AcenteGUI acente = new AcenteGUI();
     }
 
@@ -561,6 +725,103 @@ public class AcenteGUI extends JFrame {
         }
     }
 
+    public void loadReservationModel(Date input, Date out) throws ParseException {
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_rezervation_list.getModel();
+        clearModel.setRowCount(0);
+        if (Reservation.getList().isEmpty()) {
+            loadReservation();
+
+        } else {
+            int i;
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+
+            Date inputRecord = null;
+            Date outRecord = null;
+
+            for (Room obj : Room.getList()) {
+
+                if (obj.getPiece() - Reservation.getFetchRemaining(obj.getId()) == 1) {
+
+                    for (Reservation res : Reservation.getList()) {
+                        inputRecord = simpleDateFormat.parse(res.getInput());
+                        outRecord = simpleDateFormat.parse(res.getOutput());
+
+                        if (inputRecord.getTime() >= input.getTime() && (outRecord.getTime() <= out.getTime())) {
+                            System.out.println("girdi");
+                        } else {
+                            if(obj.getPiece() - Reservation.getFetchRemaining(obj.getId()) == 0){
+
+                            }else {
+                                i = 0;
+                                System.out.println(obj.getId() + "girmedi");
+                                row_reservation_list[i++] = obj.getId();
+                                row_reservation_list[i++] = obj.getHotel().getName();
+                                row_reservation_list[i++] = obj.getHostel().getType();
+                                row_reservation_list[i++] = obj.getPiece() - Reservation.getFetchRemaining(obj.getId());
+                                row_reservation_list[i++] = obj.getType();
+                                row_reservation_list[i++] = obj.getFirstSeason();
+                                row_reservation_list[i++] = obj.getThenSeason();
+
+                                mdl_resevation_list.addRow(row_reservation_list);
+
+                        }
+
+                        }
+
+                    }
+
+                }else{
+                    if(obj.getPiece() - Reservation.getFetchRemaining(obj.getId()) == 0){
+
+                    }else {
+                        i = 0;
+                        System.out.println(obj.getId() + "girmedi");
+                        row_reservation_list[i++] = obj.getId();
+                        row_reservation_list[i++] = obj.getHotel().getName();
+                        row_reservation_list[i++] = obj.getHostel().getType();
+                        row_reservation_list[i++] = obj.getPiece() - Reservation.getFetchRemaining(obj.getId());
+                        row_reservation_list[i++] = obj.getType();
+                        row_reservation_list[i++] = obj.getFirstSeason();
+                        row_reservation_list[i++] = obj.getThenSeason();
+
+                        mdl_resevation_list.addRow(row_reservation_list);
+                    }
+                }
+
+
+            }
+        }
+    }
+
+
+    public void loadReservation() {
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_rezervation_list.getModel();
+        clearModel.setRowCount(0);
+
+        int i;
+
+
+        for (Room obj : Room.getList()) {
+
+
+            i = 0;
+            if(obj.getPiece() - Reservation.getFetchRemaining(obj.getId())!=0) {
+                row_reservation_list[i++] = obj.getId();
+                row_reservation_list[i++] = obj.getHotel().getName();
+                row_reservation_list[i++] = obj.getHostel().getType();
+                row_reservation_list[i++] = obj.getPiece() - Reservation.getFetchRemaining(obj.getId());
+                row_reservation_list[i++] = obj.getType();
+                row_reservation_list[i++] = obj.getFirstSeason();
+                row_reservation_list[i++] = obj.getThenSeason();
+
+                mdl_resevation_list.addRow(row_reservation_list);
+            }
+
+        }
+    }
+
+
     //Combobox'lara veriler atılır.
     public void cmbAddItem() {
 
@@ -596,5 +857,19 @@ public class AcenteGUI extends JFrame {
         this.selected_roomID = selected_roomID;
     }
 
+    public Date getLast_date() {
+        return last_date;
+    }
 
+    public void setLast_date(Date last_date) {
+        this.last_date = last_date;
+    }
+
+    public int getRezervation_room() {
+        return rezervation_room;
+    }
+
+    public void setRezervation_room(int rezervation_room) {
+        this.rezervation_room = rezervation_room;
+    }
 }

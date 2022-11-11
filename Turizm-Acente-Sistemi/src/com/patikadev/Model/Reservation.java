@@ -18,6 +18,8 @@ public class Reservation implements Query {
     private int child;
     private int adult;
 
+
+
     public Reservation(int id, int room_id, String reservation, String input, String output, int child, int adult) {
         this.id = id;
         this.room_id = room_id;
@@ -35,6 +37,32 @@ public class Reservation implements Query {
         Reservation obj;
         try {
             PreparedStatement pr= DBConnecter.getInstance().prepareStatement(reservationListQuery);
+            ResultSet rs =pr.executeQuery();
+            while (rs.next()){
+                obj=new Reservation(rs.getInt("id"),
+                        rs.getInt("room_id"),
+                        rs.getString("reservation"),
+                        rs.getString("input"),
+                        rs.getString("output"),
+                        rs.getInt("child"),
+                        rs.getInt("adult"));
+                reservationList.add(obj);
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return reservationList;
+    }
+    //********************************************************
+    //Reserve odaları listeler.
+    public static ArrayList<Reservation>getList(int room_id){
+        ArrayList<Reservation> reservationList=new ArrayList<>();
+        Reservation obj;
+        try {
+            PreparedStatement pr= DBConnecter.getInstance().prepareStatement(reservationWhereReserve);
+            pr.setInt(room_id,1);
             ResultSet rs =pr.executeQuery();
             while (rs.next()){
                 obj=new Reservation(rs.getInt("id"),
@@ -80,6 +108,70 @@ public class Reservation implements Query {
         return obj;
     }
     //********************************************************
+    //id'ye sahip reservasyonu getirir.
+    public static int getFetchRemaining(int room_id){
+        int value=0;
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(reservationCountRoom);
+            pr.setInt(1,room_id);
+
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()){
+               value= rs.getInt("count");
+            }
+            rs.close();
+            pr.getConnection().close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return value;
+    }
+    //********************************************************
+    public static Boolean add(int room_id, String reservation, String input, String output, int child, int adult) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(reservationAdd);
+            pr.setInt(1, room_id);
+            pr.setString(2, reservation);
+            pr.setString(3, input);
+            pr.setString(4, output);
+            pr.setInt(5, child);
+            pr.setInt(6, adult);
+
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
+    public static Boolean delete(int id) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(delete);
+            pr.setInt(1, id);
+
+
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
 
 
     public int getId() {

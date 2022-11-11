@@ -23,13 +23,20 @@ public interface Query {
     String facilityWhereFeature = "SELECT * FROM facility WHERE feature = ?";
     String roomWhereID = "SELECT * FROM room WHERE id = ?";
     String reservationWhereID = "SELECT * FROM reservation WHERE id = ?";
+    String reservationWhereReserve = "SELECT * FROM reservation WHERE room_id = ? AND reservation='YES'";
     String customerWhereID = "SELECT * FROM customer WHERE id = ?";
+
+
     //**************************************************************
     //SQL veri ekleme sorguları.
     String hotelAdd = "INSERT INTO hotel (name,country,city,address,e_mail,phone,facilitys,star) VALUES (?,?,?,?," +
             "?,?,?,?)";
     String roomAdd = "INSERT INTO room (hotel_id,hostel_id,bed,piece,type,firstseason,thenseason) VALUES (?,?," +
             "?,?,?,?,?)";
+    String reservationAdd = "INSERT INTO reservation (room_id,reservation,input,output,child,adult) " +
+            "VALUES (?,?,?,?,?,?)";
+    String customerAdd = "INSERT INTO customer (firstName, lastName, reservation_id, phone,e_mail) " +
+            "VALUES (?,?,?,?,?)";
     //***************************************************************
     //SQL veri güncelleme sorguları.
     String hotelUpdate = "UPDATE hotel SET name=?, country=?,city=?,address=?,e_mail=?,phone=?,facilitys=?,star=?  " +
@@ -37,4 +44,9 @@ public interface Query {
     String roomUpdate = "UPDATE room SET hotel_id=?, hostel_id=?,bed=?,piece=?,type=?,firstseason=?,thenseason=?  " +
             "WHERE id = ?";
     //***************************************************************
+    //SQL count sorguları.
+    String reservationCountRoom = "SELECT Count(*) FROM reservation WHERE room_id = ? AND reservation ='YES'";
+    //***************************************************************
+    String delete ="DELETE FROM reservation where id=?";
+
 }

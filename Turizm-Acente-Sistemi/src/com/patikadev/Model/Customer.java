@@ -74,6 +74,30 @@ public class Customer implements Query {
         return obj;
     }
     //******************************************************
+    public static Boolean add(String firstName, String lastName, int reservation_id, String phone, String e_mail) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(customerAdd);
+            pr.setString(1, firstName);
+            pr.setString(2, lastName);
+            pr.setInt(3, reservation_id);
+            pr.setString(4, phone);
+            pr.setString(5, e_mail);
+
+
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
 
 
     public int getId() {
