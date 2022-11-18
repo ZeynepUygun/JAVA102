@@ -61,7 +61,7 @@ public class Helper {
                 title="Sonuç";
                 break;
             case "iptal":
-                msg="İşlemiptal edildi.";
+                msg="İşlem iptal edildi.";
                 title="Sonuç";
                 break;
             default:

@@ -36,6 +36,8 @@ public class Hotel implements Query {
         this.star = star;
     }
 
+
+
     public Hotel() {
 
     }
@@ -248,8 +250,8 @@ public class Hotel implements Query {
     //************************************************
     //Arayüzdeki otel verilerini düzenleyip değişkene atar.
     public void dataPanel(JTextField name, JTextField country, JTextField city, JTextField address,
-                          JTextField e_mail,
-                          JTextField phone, JComboBox star) {
+                                 JTextField e_mail,
+                                 JTextField phone, JComboBox star) {
 
         setName(name.getText().trim().toUpperCase());
         setCountry(country.getText().trim().toUpperCase());
@@ -307,7 +309,10 @@ public class Hotel implements Query {
         Hotel.address = address;
     }
 
-    //************************************************
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

@@ -17,10 +17,12 @@ public class Reservation implements Query {
     private String output;
     private int child;
     private int adult;
+    private int communication_id;
 
 
 
-    public Reservation(int id, int room_id, String reservation, String input, String output, int child, int adult) {
+    public Reservation(int id, int room_id, String reservation, String input, String output, int child, int adult,
+                       int communication_id) {
         this.id = id;
         this.room_id = room_id;
         this.reservation = reservation;
@@ -28,6 +30,7 @@ public class Reservation implements Query {
         this.output = output;
         this.child = child;
         this.adult = adult;
+        this.communication_id=communication_id;
 
         this.room=Room.getFetch(room_id);
     }
@@ -45,7 +48,8 @@ public class Reservation implements Query {
                         rs.getString("input"),
                         rs.getString("output"),
                         rs.getInt("child"),
-                        rs.getInt("adult"));
+                        rs.getInt("adult"),
+                        rs.getInt("communication_id"));
                 reservationList.add(obj);
             }
             rs.close();
@@ -71,7 +75,8 @@ public class Reservation implements Query {
                         rs.getString("input"),
                         rs.getString("output"),
                         rs.getInt("child"),
-                        rs.getInt("adult"));
+                        rs.getInt("adult"),
+                        rs.getInt("communication_id"));
                 reservationList.add(obj);
             }
             rs.close();
@@ -82,6 +87,33 @@ public class Reservation implements Query {
         return reservationList;
     }
     //********************************************************
+    public static Boolean update(int id, int room_id, String input, String output, int child, int adult,
+                                 int communication_id) {
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(reservationUpdate);
+            pr.setInt(1, id);
+            pr.setInt(2, room_id);
+            pr.setString(3, "NO");
+            pr.setString(4, input);
+            pr.setString(5, output);
+            pr.setInt(6, child);
+            pr.setInt(7, adult);
+            pr.setInt(8, communication_id);
+            pr.setInt(9, id);
+
+
+            int response = pr.executeUpdate();
+
+            pr.getConnection().close();
+
+            return response != -1;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return true;
+
+    }
 
     //id'ye sahip reservasyonu getirir.
     public static Reservation getFetch(int id){
@@ -97,7 +129,32 @@ public class Reservation implements Query {
                         rs.getString("input"),
                         rs.getString("output"),
                         rs.getInt("child"),
-                        rs.getInt("adult"));
+                        rs.getInt("adult"),
+                        rs.getInt("communication_id"));
+            }
+            rs.close();
+            pr.getConnection().close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return obj;
+    }
+    public static Reservation getFetchCommunation(int communication_id){
+        Reservation obj=null;
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(reservationWhereCommunation_id);
+            pr.setInt(1,communication_id);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()){
+                obj=new Reservation(rs.getInt("id"),
+                        rs.getInt("room_id"),
+                        rs.getString("reservation"),
+                        rs.getString("input"),
+                        rs.getString("output"),
+                        rs.getInt("child"),
+                        rs.getInt("adult"),
+                        rs.getInt("communication_id"));
             }
             rs.close();
             pr.getConnection().close();
@@ -128,7 +185,7 @@ public class Reservation implements Query {
         return value;
     }
     //********************************************************
-    public static Boolean add(int room_id, String reservation, String input, String output, int child, int adult) {
+    public static Boolean add(int room_id, String reservation, String input, String output, int child, int adult,int communication_id) {
         try {
             PreparedStatement pr = DBConnecter.getInstance().prepareStatement(reservationAdd);
             pr.setInt(1, room_id);
@@ -137,6 +194,7 @@ public class Reservation implements Query {
             pr.setString(4, output);
             pr.setInt(5, child);
             pr.setInt(6, adult);
+            pr.setInt(7,communication_id);
 
 
 
@@ -236,5 +294,13 @@ public class Reservation implements Query {
 
     public void setAdult(int adult) {
         this.adult = adult;
+    }
+
+    public int getCommunication_id() {
+        return communication_id;
+    }
+
+    public void setCommunication_id(int communication_id) {
+        this.communication_id = communication_id;
     }
 }

@@ -14,33 +14,36 @@ public class Customer implements Query {
     private String lastName;
     private int reservation_id;
     private Reservation reservation;
-    private String phone;
-    private String e_mail;
+    private String uyruk;
+    private String pasaport;
 
-    public Customer(int id, String firstName, String lastName, int reservation_id, String phone, String e_mail) {
+    public Customer(int id, String firstName, String lastName, int reservation_id, String uyruk, String
+    tc_pasaport) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.reservation_id = reservation_id;
-        this.phone = phone;
-        this.e_mail = e_mail;
+        this.uyruk = uyruk;
+        this.pasaport = tc_pasaport;
 
         this.reservation = Reservation.getFetch(reservation_id);
     }
     //Müşterilari listeler.
     public static ArrayList<Customer> getList() {
         ArrayList<Customer> customerList = new ArrayList<>();
-        Customer obj = null;
+        Customer obj;
+
         try {
             PreparedStatement pr = DBConnecter.getInstance().prepareStatement(customerListQuery);
             ResultSet rs = pr.executeQuery();
+
             while (rs.next()) {
                 obj = new Customer(rs.getInt("id"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
                         rs.getInt("reservation_id"),
-                        rs.getString("phone"),
-                        rs.getString("e_mail"));
+                        rs.getString("uyruk"),
+                        rs.getString("tc_pasaport"));
                 customerList.add(obj);
             }
             rs.close();
@@ -60,11 +63,11 @@ public class Customer implements Query {
             ResultSet rs =pr.executeQuery();
             if(rs.next()){
                 obj = new Customer(rs.getInt("id"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
                         rs.getInt("reservation_id"),
-                        rs.getString("phone"),
-                        rs.getString("e_mail"));
+                        rs.getString("tc_pasaport"),
+                        rs.getString("uyruk"));
             }
             rs.close();
             pr.getConnection().close();
@@ -74,14 +77,38 @@ public class Customer implements Query {
         return obj;
     }
     //******************************************************
-    public static Boolean add(String firstName, String lastName, int reservation_id, String phone, String e_mail) {
+
+    public static ArrayList<Customer> getListReservationID(int reservation_id) {
+        ArrayList<Customer> customerList = new ArrayList<>();
+        Customer obj;
+        try {
+            PreparedStatement pr = DBConnecter.getInstance().prepareStatement(customerWhereReservationID);
+            pr.setInt(1,reservation_id);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                obj = new Customer(rs.getInt("id"),
+                        rs.getString("firstname"),
+                        rs.getString("lastname"),
+                        rs.getInt("reservation_id"),
+                        rs.getString("uyruk"),
+                        rs.getString("tc_pasaport"));
+                customerList.add(obj);
+            }
+            rs.close();
+            pr.getConnection().close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return customerList;
+    }
+    public static Boolean add(String firstName, String lastName, int reservation_id, String uyruk, String tc_pasaport) {
         try {
             PreparedStatement pr = DBConnecter.getInstance().prepareStatement(customerAdd);
             pr.setString(1, firstName);
             pr.setString(2, lastName);
             pr.setInt(3, reservation_id);
-            pr.setString(4, phone);
-            pr.setString(5, e_mail);
+            pr.setString(4, uyruk);
+            pr.setString(5, tc_pasaport);
 
 
 
@@ -140,19 +167,19 @@ public class Customer implements Query {
         this.reservation = reservation;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUyruk() {
+        return uyruk;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUyruk(String uyruk) {
+        this.uyruk = uyruk;
     }
 
-    public String getE_mail() {
-        return e_mail;
+    public String getPasaport() {
+        return pasaport;
     }
 
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
+    public void setPasaport(String pasaport) {
+        this.pasaport = pasaport;
     }
 }
